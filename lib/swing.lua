@@ -85,7 +85,8 @@ lib.LoadSwingTimer = function(one)
 	end
 	Heddmain.swing.events.UNIT_ATTACK_SPEED("player")
 	
-	function Heddmain.swing.events.COMBAT_LOG_EVENT_UNFILTERED(self,_,event,_,src_guid)
+	function Heddmain.swing.events.COMBAT_LOG_EVENT_UNFILTERED()
+		local self,_,event,_,src_guid = CombatLogGetCurrentEventInfo()
 		if string.find(event,"SWING") and ( src_guid == cfg.GUID["player"] ) then -- string.sub(event,1,5) == "SWING" ) 
 			if self.Left.cd>0 then
 				if (self.Right.cd-self.Right.duration)<=(self.Left.cd-self.Left.duration) then --(self.Right.last+self.Right.cd)>self.Right.now

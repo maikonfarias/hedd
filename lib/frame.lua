@@ -61,7 +61,7 @@ lib.hideRuneFrame=function()
 	RuneFrame.ClearAllPoints = hedlib.dummy --function() end
 	RuneFrame.SetAllPoints = hedlib.dummy --function() end
 	RuneFrame:UnregisterEvent("RUNE_POWER_UPDATE");
-	RuneFrame:UnregisterEvent("RUNE_TYPE_UPDATE");
+	--RuneFrame:UnregisterEvent("RUNE_TYPE_UPDATE");
 	RuneFrame:UnregisterEvent("PLAYER_ENTERING_WORLD");
 	RuneFrame:SetScript("OnEvent", nil);
 	RuneFrame:SetParent(nil)

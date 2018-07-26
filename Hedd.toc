@@ -1,8 +1,8 @@
-## Interface: 70300
-## Title: Heds DPS mod
+## Interface: 80000
+## Title: Heds DPS mod (fix by Tarqueenn)
 ## Notes: DPS priorities for some classes (Shaman, Hunter etc).
 ## Author: Hed
-## Version: 7.3.0
+## Version: 8.0.0
 ## SavedVariables: HeddDB
 ## OptionalDeps: Hsettings, SpellFlash,SpellFlashCore,OmniCC
 ## X-Curse-Packaged-Version: r108

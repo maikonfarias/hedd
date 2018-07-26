@@ -478,9 +478,9 @@ lib.classes["MONK"][3] = function() --Windwalker
 			return nil
 		end,
 		["Tiger Palm"] = function()
-			if cfg.AltPower.max>=cfg.AltPower.now+2 or lib.GetAura({"Serenity"})>lib.GetSpellCD("Tiger Palm") then
-				return lib.SimpleCDCheck("Tiger Palm",lib.GetAura({"Blackout Kick!"})) --,lib.GetAura({"Serenity"})
-			end
+			--if cfg.AltPower.max>=cfg.AltPower.now+2 or lib.GetAura({"Serenity"})>lib.GetSpellCD("Tiger Palm") then
+			return lib.SimpleCDCheck("Tiger Palm",lib.GetAura({"Blackout Kick!"})) --,lib.GetAura({"Serenity"})
+			--end
 		end,
 		["Tiger Palm_nomax"] = function()
 			if cfg.AltPower.max>cfg.AltPower.now then

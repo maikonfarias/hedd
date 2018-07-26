@@ -115,7 +115,8 @@ lib.classes["WARLOCK"][1] = function()
 		end,
 	}
 	cfg.warlock_effigy=0
-	function Heddclassevents.COMBAT_LOG_EVENT_UNFILTERED(timeStamp, eventtype,_,sourceGUID,sourceName,_,_,destGUID,destName,_,_,SpellID,spellName,_,_,interrupt)
+	function Heddclassevents.COMBAT_LOG_EVENT_UNFILTERED()
+		local timeStamp, eventtype,_,sourceGUID,sourceName,_,_,destGUID,destName,_,_,SpellID,spellName,_,_,interrupt = CombatLogGetCurrentEventInfo()
 		if string.find(eventtype,"SUMMON") and SpellID==lib.GetSpellID("Soul Effigy") and sourceGUID == cfg.GUID["player"] then
 			cfg.warlock_effigy=destGUID
 			--print(eventtype.." "..sourceGUID.." "..sourceName.." "..SpellID.." "..spellName.." "..destGUID)

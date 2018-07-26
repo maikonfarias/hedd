@@ -21,10 +21,10 @@ end
 lib.classes["WARRIOR"][2] = function () --Fury
 	cfg.talents={
 		["Wrecking Ball"]=IsPlayerSpell(215569),
-		["Frenzy"]=IsPlayerSpell(206313),
 		["Inner Rage"]=IsPlayerSpell(215573),
 		["Frothing Berserker"]=IsPlayerSpell(215571),
 		["Outburst"]=IsPlayerSpell(206320),
+		["Carnage"]=IsPlayerSpell(202922),
 	}
 	lib.AddAura("Enrage",184362,"buff","player")
 	
@@ -41,7 +41,7 @@ lib.classes["WARRIOR"][2] = function () --Fury
 	
 	lib.AddAura("Meat Cleaver",85739,"buff","player")
 	lib.AddAura("Wrecking Ball",215570,"buff","player")
-	lib.AddAura("Frenzy",202539,"buff","player")
+	lib.AddAura("Furious Slash",202539,"buff","player")
 	lib.AddAura("Massacre",206316,"buff","player")
 	lib.AddAura("Frothing Berserker",215572,"buff","player")
 	
@@ -54,30 +54,31 @@ lib.classes["WARRIOR"][2] = function () --Fury
 	cfg.plistdps = {}
 	table.insert(cfg.plistdps,"Charge_range")
 	table.insert(cfg.plistdps,"Kick")
-	if cfg.talents["Frenzy"] then
-		table.insert(cfg.plistdps,"Furious Slash_Frenzy")
-	end
+	table.insert(cfg.plistdps,"Furious Slash_Frenzy")
 	table.insert(cfg.plistdps,"Battle Cry")
 	table.insert(cfg.plistdps,"Avatar")
 	table.insert(cfg.plistdps,"Bloodbath")
 	table.insert(cfg.plistdps,"Whirlwind_aoe")
 	table.insert(cfg.plistdps,"Bladestorm_aoe")
 	table.insert(cfg.plistdps,"Execute")
-	table.insert(cfg.plistdps,"Rampage_noEnrage")
+	--table.insert(cfg.plistdps,"Rampage_noEnrage")
+	table.insert(cfg.plistdps,"Rampage")
 	table.insert(cfg.plistdps,"Bloodthirst_noEnrage")
+	table.insert(cfg.plistdps,"Raging Blow_2charges")
 	if cfg.talents["Outburst"] then
 		table.insert(cfg.plistdps,"Berserker Rage_noEnrage")
 	end
-	table.insert(cfg.plistdps,"Odyn's Fury")
+	--table.insert(cfg.plistdps,"Odyn's Fury")
 	table.insert(cfg.plistdps,"Bloodthirst")
 	table.insert(cfg.plistdps,"Whirlwind_aoe4")
+	table.insert(cfg.plistdps,"Dragon Roar")
 	table.insert(cfg.plistdps,"Raging Blow")
+	table.insert(cfg.plistdps,"Furious Slash")
+	table.insert(cfg.plistdps,"Whirlwind")
 	if cfg.talents["Wrecking Ball"] then
 		table.insert(cfg.plistdps,"Whirlwind_Wrecking Ball")
 	end
-	table.insert(cfg.plistdps,"Dragon Roar")
 	table.insert(cfg.plistdps,"Whirlwind_aoe2")
-	table.insert(cfg.plistdps,"Furious Slash")
 	table.insert(cfg.plistdps,"end")
 	
 	cfg.plistaoe = nil
@@ -98,6 +99,9 @@ lib.classes["WARRIOR"][2] = function () --Fury
 				return lib.SimpleCDCheck("Bladestorm")
 			end
 			return nil
+		end,
+		["Raging Blow_2charges"] = function ()
+			return lib.SimpleCDCheck("Raging Blow",lib.GetSpellCD("Raging Blow",nil,lib.GetSpellMaxCharges("Raging Blow")))
 		end,
 		["Raging Blow_Enrage"] = function ()
 			if lib.GetAura({"Enrage"})>lib.GetSpellCD("Raging Blow") then
@@ -140,10 +144,10 @@ lib.classes["WARRIOR"][2] = function () --Fury
 			return nil
 		end,
 		["Furious Slash_Frenzy"] = function ()
-			if lib.GetAuraStacks("Frenzy")<3 then
+			if lib.GetAuraStacks("Furious Slash")<3 or lib.GetAura({"Furious Slash"})<3 then
 				return lib.SimpleCDCheck("Furious Slash")
 			end
-			return lib.SimpleCDCheck("Furious Slash",lib.GetAura({"Frenzy"})-cfg.gcd)
+			return nil
 		end,
 		["Battle Cry"] = function ()
 			if cfg.Power.now>=lib.GetSpellCost("Rampage") then return nil end
@@ -163,6 +167,12 @@ lib.classes["WARRIOR"][2] = function () --Fury
 			if cfg.Power.now==cfg.Power.max or lib.GetAura({"Massacre"})>0 then return lib.SimpleCDCheck("Rampage") end
 			if cfg.talents["Frothing Berserker"] then return nil end
 			return lib.SimpleCDCheck("Rampage",lib.GetAura({"Enrage"}))
+		end,
+		["Rampage"] = function ()
+			if lib.GetAura({"Enrage"}) == 0 or cfg.Power.now > 95 then
+				return lib.SimpleCDCheck("Rampage")
+			end
+			return nil
 		end,
 		["Execute"] = function ()
 			if cfg.noaoe or cfg.cleave_targets<4 then

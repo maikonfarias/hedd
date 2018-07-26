@@ -8,7 +8,7 @@ ns.lib = lib
 
 lib.UpdateCast = function(SpellID)
 	if SpellID==240022 then return end
-	cfg.Casting.name, _, _, _, cfg.Casting.caststart, cfg.Casting.castend, _, cfg.Casting.castid = UnitCastingInfo("player")
+	cfg.Casting.name, _, _, cfg.Casting.caststart, cfg.Casting.castend, _, cfg.Casting.castid = UnitCastingInfo("player")
 	if cfg.Casting.name and cfg.Casting.castid~=0 and cfg.Casting.castid~="0-0-0-0-0-0000000000" then
 		cfg.Casting.iscasting=true
 		cfg.Casting.caststart=cfg.Casting.caststart / 1e3
@@ -31,7 +31,7 @@ lib.UpdateCast = function(SpellID)
 end
 
 lib.UpdateChannel = function(SpellID)
-	cfg.Channeling.name, _, _, _, cfg.Channeling.startTime, cfg.Channeling.endTime = UnitChannelInfo("player")
+	cfg.Channeling.name, _, _, cfg.Channeling.startTime, cfg.Channeling.endTime = UnitChannelInfo("player")
 	if cfg.Channeling.name then
 		cfg.Channeling.ischanneling=true
 		cfg.Channeling.startTime=cfg.Channeling.startTime / 1e3
@@ -152,6 +152,9 @@ cfg.lastspell2=0
 
 lib.SaveCast = function(SpellID,spellname)
 	--print(SpellID.." - "..spellname)
+	if not SpellID then
+		return
+	end
 	cfg.spellcast[SpellID]=GetTime()
 	if cfg.NoSaveSpell and cfg.NoSaveSpell[SpellID] then return end
 	if cfg.SaveSpell and not cfg.SaveSpell[SpellID] then return end
@@ -246,7 +249,7 @@ local interrupt_old={}
 lib.UpdateTargetCast = function(SpellID)
 	SpellID=SpellID or false
 	hedlib.shallowCopy(cfg.Interrupt,interrupt_old)
-	cfg.Interrupt.name, _, _, _, cfg.Interrupt.caststart, cfg.Interrupt.castend, _, cfg.Interrupt.castid, cfg.Interrupt.notInterruptible = UnitCastingInfo("target")
+	cfg.Interrupt.name, _, _, cfg.Interrupt.caststart, cfg.Interrupt.castend, _, cfg.Interrupt.castid, cfg.Interrupt.notInterruptible = UnitCastingInfo("target")
 	if cfg.Interrupt.name then
 		--print(tostring(cfg.Interrupt.notInterruptible))
 		cfg.Interrupt.iscasting=true
@@ -270,7 +273,7 @@ lib.UpdateTargetChannel = function(SpellID)
 
 	SpellID=SpellID or false
 	hedlib.shallowCopy(cfg.Interrupt,interrupt_old)
-	cfg.Interrupt.name, _, _, _, cfg.Interrupt.caststart, cfg.Interrupt.castend, _, cfg.Interrupt.notInterruptible = UnitChannelInfo("target")
+	cfg.Interrupt.name, _, _, cfg.Interrupt.caststart, cfg.Interrupt.castend, _, cfg.Interrupt.notInterruptible = UnitChannelInfo("target")
 	if cfg.Interrupt.name then
 		--print(tostring(cfg.Interrupt.notInterruptible))
 		cfg.Interrupt.iscasting=true

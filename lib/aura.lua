@@ -372,7 +372,7 @@ lib.UpdateAuraAll = function(unit)
 	
 	--buffs
 	for i=1,40 do
-		aname, _, _, acount, adispelType, aduration, aexpirationTime, aunitCaster, _, _, aid, canApplyAura, isBossDebuff, _,value1, value2, value3 = UnitAura(unit,i,"HELPFUL")
+		aname, _, acount, adispelType, aduration, aexpirationTime, aunitCaster, _, _, aid, canApplyAura, isBossDebuff, _,value1, value2, value3 = UnitAura(unit,i,"HELPFUL")
 		if aid then
 			adispelType=adispelType or "Other"
 			if hedlib.enrage[aid] then adispelType="Enrage" end
@@ -392,7 +392,7 @@ lib.UpdateAuraAll = function(unit)
 	
 	--debuffs
 	for i=1,40 do
-		aname, _, _, acount, adispelType, aduration, aexpirationTime, aunitCaster, _, _, aid, _,value1, value2, value3  = UnitAura(unit,i,"HARMFUL")
+		aname, _, acount, adispelType, aduration, aexpirationTime, aunitCaster, _, _, aid, _,value1, value2, value3  = UnitAura(unit,i,"HARMFUL")
 		if aid then
 			adispelType=adispelType or "Other"
 			if hedlib.enrage[aid] then adispelType="Enrage" end
@@ -592,7 +592,7 @@ lib.CheckBuff = function(unit, bufftype)
 		end
 	end
 	for i=1,40 do
-		local name, _, _, _, b_type, _, _, _, _, _, SpellID=UnitBuff(unit,i)
+		local name, _, _, b_type, _, _, _, _, _, SpellID=UnitBuff(unit,i)
 		if name then
 			b_type=b_type or "Other"
 			if hedlib.enrage[SpellID] then b_type="Enrage" end
@@ -614,7 +614,7 @@ lib.CheckDebuff = function(unit, bufftype)
 		end
 	end
 	for i=1,40 do
-		local name, _, _, _, b_type, _, _, _, _, _, SpellID=UnitDebuff(unit,i)
+		local name, _, _, b_type, _, _, _, _, _, SpellID=UnitDebuff(unit,i)
 		if name then
 			b_type=b_type or "Other"
 			if hedlib.enrage[SpellID] then b_type="Enrage" end
@@ -882,11 +882,11 @@ end
 
 lib.PrintAuraId = function(id)
 	for i=1,40 do
-		local name, _, icon, count, type, duration, exp, unitCaster, isStealable, _, SpellID=UnitBuff("player",i);
+		local name, icon, count, type, duration, exp, unitCaster, isStealable, _, SpellID=UnitBuff("player",i);
 		if name then
 			if id==SpellID then
 				type=debuffType or "other";
-				print(i.." "..unitCaster.." "..type.." "..count.." "..name.." = "..SpellID.." "..lib.GetAura({cfg.id2aura[id]}))
+				print(i.." unitCaster:"..unitCaster.." type:"..type.." count:"..count.." name:"..name.." = SpellID:"..SpellID.." "..lib.GetAura({cfg.id2aura[id]}))
 			end
 		--else
 			--print(i.." no aura")
@@ -923,7 +923,7 @@ lib.PrintBuff = function(unit, bufftype)
 	unit=unit or "player"
 	bufftype=bufftype or "all"
 	for i=1,40 do
-		local name, _, icon, count, b_type, duration, b_exp, caster, stealable, _, SpellID=UnitAura(unit,i)
+		local name, icon, count, b_type, duration, b_exp, caster, stealable, _, SpellID=UnitAura(unit,i)
 		if name then
 			if count==0 then count=1 end
 			b_type=b_type or "Other"
@@ -947,7 +947,7 @@ lib.PrintDebuff = function(unit, bufftype)
 	unit=unit or "target"
 	bufftype=bufftype or "all"
 	for i=1,40 do
-		local name, _, icon, count, b_type, duration, b_exp, caster, stealable, _, SpellID=UnitDebuff(unit,i)
+		local name, icon, count, b_type, duration, b_exp, caster, stealable, _, SpellID=UnitDebuff(unit,i)
 		if name then
 			if count==0 then count=1 end
 			b_type=b_type or "Other"
