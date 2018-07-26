@@ -1,0 +1,4 @@
+<Bindings>
+  <Binding name="CLICK HEDD_FRAME:LeftButton"  header="HEDD_HEADER">
+  </Binding>
+</Bindings>

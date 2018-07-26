@@ -1,0 +1,773 @@
+------------------------------------------------------------------------
+r492 | Heda | 2017-12-26 10:21:11 -0600 (Tue, 26 Dec 2017) | 1 line
+Changed paths:
+   M /trunk/classes/monk70000.lua
+
+Monk BM update
+------------------------------------------------------------------------
+r491 | Heda | 2017-12-23 04:56:31 -0600 (Sat, 23 Dec 2017) | 1 line
+Changed paths:
+   M /trunk/classes/monk70000.lua
+
+small fix
+------------------------------------------------------------------------
+r490 | Heda | 2017-12-23 04:49:23 -0600 (Sat, 23 Dec 2017) | 1 line
+Changed paths:
+   M /trunk/classes/monk70000.lua
+
+Stagger dump fix
+------------------------------------------------------------------------
+r489 | Heda | 2017-12-22 10:23:51 -0600 (Fri, 22 Dec 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/classes/monk70000.lua
+   M /trunk/defaults.lua
+   M /trunk/frames.lua
+   M /trunk/lib/other.lua
+
+Bremaster
+------------------------------------------------------------------------
+r488 | Heda | 2017-12-18 10:02:59 -0600 (Mon, 18 Dec 2017) | 1 line
+Changed paths:
+   M /trunk/classes/monk70000.lua
+
+Monk
+------------------------------------------------------------------------
+r487 | Heda | 2017-12-13 08:49:27 -0600 (Wed, 13 Dec 2017) | 1 line
+Changed paths:
+   M /trunk/core.lua
+   M /trunk/hedlib.lua
+   M /trunk/lib/other.lua
+
+Added automatic change of Outfits when you try to change it incombat.
+------------------------------------------------------------------------
+r486 | Heda | 2017-12-11 12:27:27 -0600 (Mon, 11 Dec 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/classes/monk70000.lua
+
+Monk fixes
+------------------------------------------------------------------------
+r485 | Heda | 2017-12-08 08:53:04 -0600 (Fri, 08 Dec 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+
+Feral fixes for TF and last Rake of Incarnation.
+------------------------------------------------------------------------
+r484 | Heda | 2017-11-27 08:10:12 -0600 (Mon, 27 Nov 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/classes/monk70000.lua
+
+Prepatch
+------------------------------------------------------------------------
+r483 | Heda | 2017-11-03 10:05:08 -0500 (Fri, 03 Nov 2017) | 1 line
+Changed paths:
+   M /trunk/classes/monk70000.lua
+   M /trunk/lib/artifact.lua
+
+Monk update
+------------------------------------------------------------------------
+r482 | Heda | 2017-10-24 11:09:59 -0500 (Tue, 24 Oct 2017) | 1 line
+Changed paths:
+   M /trunk/classes/monk70000.lua
+   M /trunk/lib/spell.lua
+
+added spell count - modifier.
+------------------------------------------------------------------------
+r481 | Heda | 2017-10-17 11:18:47 -0500 (Tue, 17 Oct 2017) | 1 line
+Changed paths:
+   M /trunk/classes/monk70000.lua
+   M /trunk/hedlib.lua
+
+Monks update
+------------------------------------------------------------------------
+r480 | Heda | 2017-09-28 11:18:46 -0500 (Thu, 28 Sep 2017) | 1 line
+Changed paths:
+   M /trunk/classes/dk70000.lua
+   M /trunk/classes/druid70000.lua
+   M /trunk/classes/hunter70000.lua
+
+minor fixes
+------------------------------------------------------------------------
+r479 | Heda | 2017-09-27 10:57:21 -0500 (Wed, 27 Sep 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+
+Cat Artifact use update
+------------------------------------------------------------------------
+r478 | Heda | 2017-09-22 10:41:29 -0500 (Fri, 22 Sep 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/lib/spell.lua
+
+Fix feral cats Clearcasted reload.
+------------------------------------------------------------------------
+r477 | Heda | 2017-09-15 10:15:14 -0500 (Fri, 15 Sep 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+
+Shadowmeld 100500 fix
+------------------------------------------------------------------------
+r476 | Heda | 2017-09-08 11:26:28 -0500 (Fri, 08 Sep 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+
+Shadowmeld fixes
+------------------------------------------------------------------------
+r475 | Heda | 2017-09-01 11:01:35 -0500 (Fri, 01 Sep 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+
+Prowl+Inc added.
+------------------------------------------------------------------------
+r474 | Heda | 2017-08-31 10:32:47 -0500 (Thu, 31 Aug 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+
+Feral thrash Clearcast fixed
+------------------------------------------------------------------------
+r473 | Heda | 2017-08-29 10:51:52 -0500 (Tue, 29 Aug 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/lib/aura.lua
+
+7.3 Ferals will be facerolling )
+------------------------------------------------------------------------
+r472 | Heda | 2017-08-25 10:46:32 -0500 (Fri, 25 Aug 2017) | 1 line
+Changed paths:
+   M /trunk/Hedd.toc
+   M /trunk/classes/druid70000.lua
+
+Druid prepare for 7.3.0
+------------------------------------------------------------------------
+r471 | Heda | 2017-08-24 10:54:11 -0500 (Thu, 24 Aug 2017) | 1 line
+Changed paths:
+   M /trunk/Hedd.toc
+   M /trunk/cfg.lua
+   M /trunk/classes/dh70000.lua
+   M /trunk/classes/dk70000.lua
+   M /trunk/classes/druid70000.lua
+   M /trunk/classes/hunter70000.lua
+   M /trunk/classes/monk70000.lua
+   M /trunk/classes/paladin70000.lua
+   M /trunk/classes/rogue70000.lua
+   M /trunk/classes/shaman70000.lua
+   M /trunk/classes/warlock70000.lua
+   M /trunk/classes/warrior70000.lua
+   M /trunk/lib/aura.lua
+   M /trunk/lib/legion.lua
+   M /trunk/lib/spell.lua
+
+Druid preparing for 7.3
+------------------------------------------------------------------------
+r470 | Heda | 2017-08-21 11:24:07 -0500 (Mon, 21 Aug 2017) | 1 line
+Changed paths:
+   M /trunk/classes/warrior70000.lua
+
+Avatar fix
+------------------------------------------------------------------------
+r469 | Heda | 2017-08-18 11:13:09 -0500 (Fri, 18 Aug 2017) | 1 line
+Changed paths:
+   M /trunk/classes/warrior70000.lua
+
+war update
+------------------------------------------------------------------------
+r468 | Heda | 2017-08-16 10:24:22 -0500 (Wed, 16 Aug 2017) | 1 line
+Changed paths:
+   M /trunk/classes/paladin70000.lua
+   M /trunk/classes/warrior70000.lua
+
+Small fixes to aoe
+------------------------------------------------------------------------
+r467 | Heda | 2017-07-24 11:47:43 -0500 (Mon, 24 Jul 2017) | 2 lines
+Changed paths:
+   M /trunk/classes/warrior70000.lua
+   M /trunk/lib/aura.lua
+   M /trunk/lib/spell.lua
+   M /trunk/options.lua
+
+More performance fixes.
+Option for tracking added.
+------------------------------------------------------------------------
+r466 | Heda | 2017-07-21 10:40:03 -0500 (Fri, 21 Jul 2017) | 2 lines
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/classes/paladin70000.lua
+   M /trunk/defaults.lua
+   M /trunk/lib/aura.lua
+   M /trunk/lib/cd.lua
+   M /trunk/lib/common.lua
+   M /trunk/lib/frame.lua
+   M /trunk/lib/spell.lua
+
+Function optimization!
+Cat last legendary added.
+------------------------------------------------------------------------
+r465 | Heda | 2017-07-12 14:39:16 -0500 (Wed, 12 Jul 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/hedlib.lua
+
+fixed druid
+------------------------------------------------------------------------
+r464 | Heda | 2017-07-07 11:42:44 -0500 (Fri, 07 Jul 2017) | 1 line
+Changed paths:
+   M /trunk/classes/warrior70000.lua
+
+small fix
+------------------------------------------------------------------------
+r463 | Heda | 2017-07-06 14:31:38 -0500 (Thu, 06 Jul 2017) | 1 line
+Changed paths:
+   M /trunk/classes/warrior70000.lua
+
+Arms update
+------------------------------------------------------------------------
+r462 | Heda | 2017-07-05 11:38:58 -0500 (Wed, 05 Jul 2017) | 1 line
+Changed paths:
+   M /trunk/classes/warrior70000.lua
+
+small fix
+------------------------------------------------------------------------
+r461 | Heda | 2017-07-04 14:33:40 -0500 (Tue, 04 Jul 2017) | 1 line
+Changed paths:
+   M /trunk/classes/warrior70000.lua
+
+fixes
+------------------------------------------------------------------------
+r460 | Heda | 2017-07-03 11:31:06 -0500 (Mon, 03 Jul 2017) | 1 line
+Changed paths:
+   M /trunk/classes/warrior70000.lua
+
+Fury warrior basic update
+------------------------------------------------------------------------
+r459 | Heda | 2017-07-01 04:13:35 -0500 (Sat, 01 Jul 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/core.lua
+   M /trunk/lib/frame.lua
+   M /trunk/options.lua
+
+Added /hedd tracker hide/show
+------------------------------------------------------------------------
+r458 | Heda | 2017-06-30 11:07:06 -0500 (Fri, 30 Jun 2017) | 1 line
+Changed paths:
+   M /trunk/classes/dh70000.lua
+   M /trunk/classes/druid70000.lua
+
+DH update
+------------------------------------------------------------------------
+r457 | Heda | 2017-06-29 11:08:17 -0500 (Thu, 29 Jun 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/defaults.lua
+   M /trunk/lib/frame.lua
+   M /trunk/lib/power.lua
+
+Moar fixes!
+------------------------------------------------------------------------
+r456 | Heda | 2017-06-27 11:52:54 -0500 (Tue, 27 Jun 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+
+Druid redone
+------------------------------------------------------------------------
+r455 | Heda | 2017-06-26 11:56:46 -0500 (Mon, 26 Jun 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/lib/frame.lua
+   M /trunk/lib/spell.lua
+
+Druid fixes
+------------------------------------------------------------------------
+r454 | Heda | 2017-06-23 11:05:43 -0500 (Fri, 23 Jun 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/core.lua
+   M /trunk/defaults.lua
+   M /trunk/frames.lua
+   M /trunk/lib/aura.lua
+   M /trunk/lib/frame.lua
+
+Added tracker
+------------------------------------------------------------------------
+r453 | Heda | 2017-06-22 12:12:28 -0500 (Thu, 22 Jun 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/classes/shaman70000.lua
+   M /trunk/defaults.lua
+   M /trunk/frames.lua
+   M /trunk/lib/frame.lua
+   M /trunk/lib/other.lua
+
+Started adding tracker
+------------------------------------------------------------------------
+r452 | Heda | 2017-06-19 12:33:54 -0500 (Mon, 19 Jun 2017) | 1 line
+Changed paths:
+   M /trunk/classes/shaman70000.lua
+
+Enhancement update!
+------------------------------------------------------------------------
+r451 | Heda | 2017-06-17 08:19:18 -0500 (Sat, 17 Jun 2017) | 1 line
+Changed paths:
+   M /trunk/classes/dh70000.lua
+   M /trunk/lib/artifact.lua
+
+Fix dh
+------------------------------------------------------------------------
+r450 | Heda | 2017-06-16 11:53:45 -0500 (Fri, 16 Jun 2017) | 1 line
+Changed paths:
+   M /trunk/core.lua
+   M /trunk/lib/artifact.lua
+
+Artifact redone
+------------------------------------------------------------------------
+r449 | Heda | 2017-06-15 12:49:15 -0500 (Thu, 15 Jun 2017) | 1 line
+Changed paths:
+   M /trunk/lib/other.lua
+
+Small fix
+------------------------------------------------------------------------
+r448 | Heda | 2017-06-15 11:37:17 -0500 (Thu, 15 Jun 2017) | 2 lines
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/core.lua
+   M /trunk/defaults.lua
+   M /trunk/lib/artifact.lua
+   M /trunk/lib/aura.lua
+   M /trunk/lib/other.lua
+   M /trunk/lib/spell.lua
+
+Added Artifact scan.
+Guardian Druid FR improved.
+------------------------------------------------------------------------
+r447 | Heda | 2017-06-14 12:56:15 -0500 (Wed, 14 Jun 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/defaults.lua
+   M /trunk/hedlib.lua
+   M /trunk/lib/other.lua
+
+Guardian druid FR and 7.2.5 update!
+------------------------------------------------------------------------
+r446 | Heda | 2017-06-09 09:43:21 -0500 (Fri, 09 Jun 2017) | 1 line
+Changed paths:
+   M /trunk/classes/dk70000.lua
+
+Frost DK in now my alt.
+------------------------------------------------------------------------
+r445 | Heda | 2017-06-08 13:46:21 -0500 (Thu, 08 Jun 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/lib/casting.lua
+
+Thrash fix
+------------------------------------------------------------------------
+r444 | Heda | 2017-04-28 10:27:25 -0500 (Fri, 28 Apr 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/defaults.lua
+   M /trunk/lib/aura.lua
+   M /trunk/lib/spell.lua
+
+Feral redone
+------------------------------------------------------------------------
+r443 | Heda | 2017-04-17 11:21:15 -0500 (Mon, 17 Apr 2017) | 1 line
+Changed paths:
+   M /trunk/core.lua
+
+respec fix
+------------------------------------------------------------------------
+r442 | Heda | 2017-04-14 11:09:06 -0500 (Fri, 14 Apr 2017) | 1 line
+Changed paths:
+   M /trunk/Hedd.toc
+   M /trunk/classes/druid70000.lua
+
+Druid shadowmeld
+------------------------------------------------------------------------
+r441 | Heda | 2017-04-13 13:02:10 -0500 (Thu, 13 Apr 2017) | 1 line
+Changed paths:
+   M /trunk/classes/dk70000.lua
+   M /trunk/classes/druid70000.lua
+
+Druid update
+------------------------------------------------------------------------
+r440 | Heda | 2017-03-28 10:31:59 -0500 (Tue, 28 Mar 2017) | 1 line
+Changed paths:
+   M /trunk/classes/dk70000.lua
+
+Unholy DK redone
+------------------------------------------------------------------------
+r439 | Heda | 2017-03-24 11:08:31 -0500 (Fri, 24 Mar 2017) | 3 lines
+Changed paths:
+   M /trunk/classes/dk70000.lua
+
+Frost DK can dps!
+PS 1 leg = Sephuz's Secret :-(
+Gonna roll another twink now.
+------------------------------------------------------------------------
+r438 | Heda | 2017-03-23 11:09:45 -0500 (Thu, 23 Mar 2017) | 1 line
+Changed paths:
+   M /trunk/classes/dk70000.lua
+
+DK heal
+------------------------------------------------------------------------
+r437 | Heda | 2017-03-23 10:03:21 -0500 (Thu, 23 Mar 2017) | 1 line
+Changed paths:
+   M /trunk/classes/dk70000.lua
+   M /trunk/classes/druid70000.lua
+
+Frost DK can DPS!
+------------------------------------------------------------------------
+r436 | Heda | 2017-03-17 11:06:19 -0500 (Fri, 17 Mar 2017) | 1 line
+Changed paths:
+   M /trunk/classes/dk70000.lua
+
+small fixes
+------------------------------------------------------------------------
+r435 | Heda | 2017-03-14 11:10:41 -0500 (Tue, 14 Mar 2017) | 1 line
+Changed paths:
+   M /trunk/classes/dk70000.lua
+   M /trunk/lib/rune.lua
+   M /trunk/lib/spell.lua
+
+Blood DK redone
+------------------------------------------------------------------------
+r434 | Heda | 2017-03-13 11:15:28 -0500 (Mon, 13 Mar 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/lib/spell.lua
+
+Moar memory leaks, but works better :-)
+------------------------------------------------------------------------
+r433 | Heda | 2017-03-11 00:49:37 -0600 (Sat, 11 Mar 2017) | 1 line
+Changed paths:
+   M /trunk/lib/spell.lua
+
+Bug
+------------------------------------------------------------------------
+r432 | Heda | 2017-03-10 23:58:57 -0600 (Fri, 10 Mar 2017) | 1 line
+Changed paths:
+   M /trunk/classes/dk70000.lua
+   M /trunk/defaults.lua
+   M /trunk/hedlib.lua
+   M /trunk/lib/power.lua
+   M /trunk/lib/rune.lua
+   M /trunk/lib/spell.lua
+
+Frost DK redone!
+------------------------------------------------------------------------
+r431 | Heda | 2017-03-07 10:21:41 -0600 (Tue, 07 Mar 2017) | 1 line
+Changed paths:
+   M /trunk/classes/dk70000.lua
+   M /trunk/classes/druid70000.lua
+
+DK started
+------------------------------------------------------------------------
+r430 | Heda | 2017-03-06 10:12:10 -0600 (Mon, 06 Mar 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+
+Aoe fix
+------------------------------------------------------------------------
+r429 | Heda | 2017-03-03 10:15:20 -0600 (Fri, 03 Mar 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+
+Raid build!
+------------------------------------------------------------------------
+r428 | Heda | 2017-03-01 09:27:15 -0600 (Wed, 01 Mar 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/lib/spell.lua
+
+Druid redone!
+------------------------------------------------------------------------
+r427 | Heda | 2017-02-28 11:48:22 -0600 (Tue, 28 Feb 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+
+New update
+------------------------------------------------------------------------
+r426 | Heda | 2017-02-27 10:12:57 -0600 (Mon, 27 Feb 2017) | 1 line
+Changed paths:
+   M /trunk/classes/dk70000.lua
+   M /trunk/classes/druid70000.lua
+
+Feral redone!
+------------------------------------------------------------------------
+r425 | Heda | 2017-02-17 10:14:19 -0600 (Fri, 17 Feb 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/lib/swing.lua
+
+Current working build.
+------------------------------------------------------------------------
+r424 | Heda | 2017-02-10 10:16:21 -0600 (Fri, 10 Feb 2017) | 1 line
+Changed paths:
+   M /trunk/classes/dh70000.lua
+   M /trunk/classes/druid70000.lua
+   M /trunk/lib/combo.lua
+   M /trunk/lib/swing.lua
+
+Fixed feral.
+------------------------------------------------------------------------
+r423 | Heda | 2017-02-07 09:53:39 -0600 (Tue, 07 Feb 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/classes/paladin70000.lua
+   M /trunk/classes/shaman70000.lua
+   M /trunk/classes/warlock70000.lua
+   M /trunk/classes/warrior70000.lua
+   M /trunk/lib/other.lua
+
+Fixes.
+------------------------------------------------------------------------
+r422 | Heda | 2017-02-06 10:02:45 -0600 (Mon, 06 Feb 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/core.lua
+   M /trunk/hedlib.lua
+   M /trunk/lib/other.lua
+   M /trunk/lib/spell.lua
+
+some fixes
+------------------------------------------------------------------------
+r421 | Heda | 2017-02-03 10:05:05 -0600 (Fri, 03 Feb 2017) | 1 line
+Changed paths:
+   M /trunk/cfg.lua
+   M /trunk/classes/druid70000.lua
+   M /trunk/core.lua
+   M /trunk/lib/casting.lua
+
+Moonkin added... sorry DHs :-)
+------------------------------------------------------------------------
+r420 | Heda | 2017-02-01 10:10:20 -0600 (Wed, 01 Feb 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+
+aoe fix
+------------------------------------------------------------------------
+r419 | Heda | 2017-02-01 09:51:39 -0600 (Wed, 01 Feb 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/defaults.lua
+   M /trunk/lib/other.lua
+   M /trunk/lib/spell.lua
+
+Draught of Souls added for feral
+------------------------------------------------------------------------
+r418 | Heda | 2017-01-23 14:09:55 -0600 (Mon, 23 Jan 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+
+Hardcast removed
+------------------------------------------------------------------------
+r417 | Heda | 2017-01-20 09:39:45 -0600 (Fri, 20 Jan 2017) | 3 lines
+Changed paths:
+   M /trunk/classes/dk70000.lua
+   M /trunk/classes/druid70000.lua
+   M /trunk/classes/shaman70000.lua
+
+Cat and Enh works.
+Unholy bug fix.
+DH broken.
+------------------------------------------------------------------------
+r416 | Heda | 2017-01-16 10:14:22 -0600 (Mon, 16 Jan 2017) | 2 lines
+Changed paths:
+   M /trunk/classes/dh70000.lua
+   M /trunk/classes/druid70000.lua
+
+Feral update.
+DH broken!
+------------------------------------------------------------------------
+r415 | Heda | 2017-01-13 09:55:45 -0600 (Fri, 13 Jan 2017) | 1 line
+Changed paths:
+   M /trunk/Hedd.toc
+   M /trunk/classes/druid70000.lua
+   M /trunk/core.lua
+   M /trunk/defaults.lua
+   M /trunk/frames.lua
+   M /trunk/lib/aura.lua
+
+Feral can dps
+------------------------------------------------------------------------
+r414 | Heda | 2017-01-12 10:12:41 -0600 (Thu, 12 Jan 2017) | 1 line
+Changed paths:
+   M /trunk/Hedd.toc
+   M /trunk/classes/druid70000.lua
+   M /trunk/lib/aura.lua
+   M /trunk/lib/other.lua
+
+Feral is counting buffs now!
+------------------------------------------------------------------------
+r413 | Heda | 2017-01-11 13:53:19 -0600 (Wed, 11 Jan 2017) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/lib/aura.lua
+   M /trunk/options.lua
+
+Druid 7.1.5 fix started.
+------------------------------------------------------------------------
+r412 | Heda | 2016-12-12 14:52:49 -0600 (Mon, 12 Dec 2016) | 1 line
+Changed paths:
+   M /trunk/classes/hunter70000.lua
+
+Surv hunter updated.
+------------------------------------------------------------------------
+r411 | Heda | 2016-12-08 10:00:51 -0600 (Thu, 08 Dec 2016) | 1 line
+Changed paths:
+   M /trunk/classes/hunter70000.lua
+
+BM redone!
+------------------------------------------------------------------------
+r410 | Heda | 2016-12-07 09:54:05 -0600 (Wed, 07 Dec 2016) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/classes/hunter70000.lua
+
+I am banned :-)
+------------------------------------------------------------------------
+r409 | Heda | 2016-11-30 10:01:17 -0600 (Wed, 30 Nov 2016) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+
+Bear artifact added.
+------------------------------------------------------------------------
+r408 | Heda | 2016-11-28 10:03:31 -0600 (Mon, 28 Nov 2016) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+
+Bear started!
+------------------------------------------------------------------------
+r407 | Heda | 2016-11-25 01:46:04 -0600 (Fri, 25 Nov 2016) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+
+Cat updates.
+------------------------------------------------------------------------
+r406 | heda | 2016-11-11 10:01:10 -0600 (Fri, 11 Nov 2016) | 1 line
+Changed paths:
+   M /trunk/classes/shaman70000.lua
+
+Elemental shaman added!
+------------------------------------------------------------------------
+r405 | heda | 2016-11-10 09:52:29 -0600 (Thu, 10 Nov 2016) | 1 line
+Changed paths:
+   M /trunk/cfg.lua
+   M /trunk/classes/dh70000.lua
+   M /trunk/classes/dk70000.lua
+   M /trunk/classes/druid70000.lua
+   M /trunk/classes/monk70000.lua
+   M /trunk/classes/paladin70000.lua
+   M /trunk/classes/shaman70000.lua
+   M /trunk/classes/warlock70000.lua
+   M /trunk/classes/warrior70000.lua
+   M /trunk/core.lua
+   M /trunk/defaults.lua
+   M /trunk/hedlib.lua
+   M /trunk/lib/artifact.lua
+   M /trunk/lib/aura.lua
+   M /trunk/lib/casting.lua
+   M /trunk/lib/cd.lua
+   M /trunk/lib/cleave.lua
+   M /trunk/lib/frame.lua
+   M /trunk/lib/other.lua
+   M /trunk/lib/spell.lua
+   M /trunk/options.lua
+
+oO a lot of work done!
+------------------------------------------------------------------------
+r404 | heda | 2016-10-30 04:29:03 -0500 (Sun, 30 Oct 2016) | 1 line
+Changed paths:
+   M /trunk/classes/dh70000.lua
+   M /trunk/lib/spell.lua
+
+dh improved
+------------------------------------------------------------------------
+r403 | heda | 2016-10-28 11:03:58 -0500 (Fri, 28 Oct 2016) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/classes/hunter70000.lua
+   M /trunk/defaults.lua
+   M /trunk/lib/other.lua
+   M /trunk/lib/spell.lua
+
+Cat fixes.
+------------------------------------------------------------------------
+r402 | heda | 2016-10-26 11:10:59 -0500 (Wed, 26 Oct 2016) | 1 line
+Changed paths:
+   M /trunk/classes/dh70000.lua
+
+Felblade update 232893
+------------------------------------------------------------------------
+r401 | heda | 2016-10-26 08:28:34 -0500 (Wed, 26 Oct 2016) | 1 line
+Changed paths:
+   M /trunk/Hedd.toc
+
+toc update
+------------------------------------------------------------------------
+r400 | heda | 2016-10-26 08:17:28 -0500 (Wed, 26 Oct 2016) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/classes/monk70000.lua
+
+Monk and Cat updated!
+------------------------------------------------------------------------
+r399 | heda | 2016-10-18 11:16:13 -0500 (Tue, 18 Oct 2016) | 1 line
+Changed paths:
+   M /trunk/classes/druid70000.lua
+   M /trunk/classes/monk70000.lua
+   M /trunk/lib/dot.lua
+
+monk and droid update
+------------------------------------------------------------------------
+r398 | heda | 2016-10-16 15:25:56 -0500 (Sun, 16 Oct 2016) | 1 line
+Changed paths:
+   M /trunk/classes/dh70000.lua
+
+dh aoe small fix
+------------------------------------------------------------------------
+r397 | heda | 2016-10-12 16:09:33 -0500 (Wed, 12 Oct 2016) | 1 line
+Changed paths:
+   M /trunk/classes/hunter70000.lua
+
+BM update.
+------------------------------------------------------------------------
+r396 | heda | 2016-10-11 13:59:48 -0500 (Tue, 11 Oct 2016) | 1 line
+Changed paths:
+   M /trunk/classes/paladin70000.lua
+
+Test retrib paly!
+------------------------------------------------------------------------
+r395 | heda | 2016-10-11 05:20:24 -0500 (Tue, 11 Oct 2016) | 1 line
+Changed paths:
+   M /trunk/classes/dh70000.lua
+
+Eye Beam_aoe fixed
+------------------------------------------------------------------------
+r394 | heda | 2016-10-10 04:32:14 -0500 (Mon, 10 Oct 2016) | 1 line
+Changed paths:
+   M /trunk/classes/dh70000.lua
+
+Fel Barrage improved
+------------------------------------------------------------------------
+r393 | heda | 2016-10-09 16:50:04 -0500 (Sun, 09 Oct 2016) | 1 line
+Changed paths:
+   M /trunk/classes/dh70000.lua
+
+Small fix
+------------------------------------------------------------------------
+r392 | heda | 2016-10-08 03:20:09 -0500 (Sat, 08 Oct 2016) | 5 lines
+Changed paths:
+   M /trunk/classes/dh70000.lua
+   M /trunk/core.lua
+   M /trunk/lib/casting.lua
+
+Update.
+1. DH havoc aoe
+2. Dh tank charge
+3. Friendly fire fix
+4. Interupt fix.
+------------------------------------------------------------------------
+

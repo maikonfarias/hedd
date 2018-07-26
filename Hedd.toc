@@ -1,0 +1,48 @@
+## Interface: 70300
+## Title: Heds DPS mod
+## Notes: DPS priorities for some classes (Shaman, Hunter etc).
+## Author: Hed
+## Version: 7.3.0
+## SavedVariables: HeddDB
+## OptionalDeps: Hsettings, SpellFlash,SpellFlashCore,OmniCC
+## X-Curse-Packaged-Version: r108
+## X-Curse-Project-Name: Hedd
+## X-Curse-Project-ID: hedd
+## X-Curse-Repository-ID: wow/hedd/mainline
+## X-Curse-Packaged-Version: r362
+## X-Curse-Project-Name: Hedd
+## X-Curse-Project-ID: hedd
+## X-Curse-Repository-ID: wow/hedd/mainline
+
+hedlib.lua
+cfg.lua
+frames.lua
+defaults.lua
+lib\frame.lua
+lib\spell.lua
+lib\rune.lua
+lib\casting.lua
+lib\aura.lua
+lib\dot.lua
+lib\cleave.lua
+lib\cd.lua
+lib\combo.lua
+lib\power.lua
+lib\other.lua
+lib\common.lua
+lib\legion.lua
+lib\swing.lua
+lib\artifact.lua
+classes\dk70000.lua
+classes\hunter70000.lua
+classes\shaman70000.lua
+classes\paladin70000.lua
+classes\druid70000.lua
+#classes\priest60000.lua
+classes\rogue70000.lua
+classes\monk70000.lua
+classes\warrior70000.lua
+classes\warlock70000.lua
+classes\dh70000.lua
+core.lua
+options.lua
