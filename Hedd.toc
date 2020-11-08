@@ -1,11 +1,11 @@
-## Interface: 80100
+## Interface: 90100
 ## Title: Heds DPS mod
-## Notes: DPS priorities for some classes (Shaman, Hunter etc).
+## Notes: DPS priorities for some classes (DK, etc).
 ## Author: Hed
-## Version: 8.0.1
+## Version: 9.0.1
 ## SavedVariables: HeddDB
 ## OptionalDeps: Hsettings, SpellFlash,SpellFlashCore,OmniCC
-## X-Curse-Packaged-Version: r362
+## X-Curse-Packaged-Version: r546-alpha
 ## X-Curse-Project-Name: Hedd
 ## X-Curse-Project-ID: hedd
 ## X-Curse-Repository-ID: wow/hedd/mainline
@@ -30,7 +30,7 @@ lib\legion.lua
 lib\swing.lua
 lib\artifact.lua
 classes\dh80100.lua
-classes\dk80100.lua
+classes\dk90100.lua
 classes\hunter80100.lua
 classes\shaman80100.lua
 classes\paladin80100.lua
