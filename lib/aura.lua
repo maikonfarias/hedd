@@ -1,6 +1,3 @@
--- /run for i=1,40 do local name, _, icon, count, type, duration, exp, unitCaster, isStealable, _, SpellID=UnitBuff("player",i); if name then type=debuffType or "other"; print(unitCaster.." "..type.." "..count.." "..name.." = "..SpellID) end end
--- /run for i=1,40 do local name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, SpellID=UnitDebuff("target",i); if name then print(name.."="..SpellID) end end
--- /run for i=1,40 do local name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, SpellID=UnitBuff("pet",i); if name then print(count.." "..name.."("..expirationTime..")".." = "..SpellID) end end
 -- get the addon namespace
 local addon, ns = ...
 -- get the config values
@@ -143,11 +140,11 @@ lib.UpdateAuraFrame=function()
 end--]]
 
 lib.AddAura = function(spell,id,atype,unit,caster) --,onchange
-	if not lib.Hedd_GSI(id) then 
-		--print("Warning!!! Aura \""..spell.."\" with id="..id.." is not in game!")
+	if not lib.Hedd_GSI(id) then
+		-- print("Warning!!! Aura \""..spell.."\" with id="..id.." is not in game!")
 		return
 	end
-	
+
 	id = id or spell
 	atype=atype or "buff"
 	if atype=="buff" then
@@ -156,10 +153,10 @@ lib.AddAura = function(spell,id,atype,unit,caster) --,onchange
 		unit=unit or "target"
 	end
 	caster=caster or "player"
-	
+
 	cfg.watchunits[unit]=true
 	cfg.aura_unit_id[unit] = cfg.aura_unit_id[unit] or {}
-	
+
 	if cfg.aura[spell] and cfg.aura[spell].id~=id then
 		cfg.id2aura[cfg.aura[spell].id]=nil
 		cfg.aura_seen[cfg.aura[spell].id]=nil
@@ -169,12 +166,12 @@ lib.AddAura = function(spell,id,atype,unit,caster) --,onchange
 		cfg.aura[spell]=cfg.aura[cfg.id2aura[id]]
 		return
 	end
-	
+
 	cfg.aura[spell] = cfg.aura[spell] or {}
 	cfg.aura[id] = cfg.aura[spell]
 	cfg.aura_unit_id[unit][id] = cfg.aura[spell]
 	cfg.id2aura[id] = spell
-	
+
 	cfg.aura[spell].id=id
 	cfg.aura[spell].Name=spell
 	cfg.aura[spell].spell=spell
@@ -200,7 +197,7 @@ lib.AddAura = function(spell,id,atype,unit,caster) --,onchange
 	lib.SetAuraRefresh(spell)
 	--cfg.aura_found[unit]=cfg.aura_found[unit] or {}
 	--cfg.aura_found[unit][id]=false
-	--print("Adding "..cfg.aura[spell].name)
+	-- print("Adding "..cfg.aura[spell].name)
 	--lib.UpdateAura(spell)
 end
 
@@ -247,7 +244,7 @@ lib.SetAuraFunction = function(spell,event,func)
 		if event=="OnApply" then
 			cfg.aura[spell].OnApply=cfg.aura[spell].OnApply or {}
 			table.insert(cfg.aura[spell].OnApply,#cfg.aura[spell].OnApply+1,func)
-			
+
 			cfg.aura[spell].OnReApply=cfg.aura[spell].OnReApply or {}
 			table.insert(cfg.aura[spell].OnReApply,#cfg.aura[spell].OnReApply+1,func)
 			return #cfg.aura[spell].OnApply
@@ -282,7 +279,7 @@ lib.SetAuraFunction = function(spell,event,func)
 			table.insert(cfg.aura[spell].OnValue3,#cfg.aura[spell].OnValue3+1,func)
 			return #cfg.aura[spell].OnValue3
 		end
-		
+
 	end
 end
 
@@ -353,11 +350,11 @@ lib.UpdateAuraAll = function(unit)
 
 	UpdateAura_time=GetTime()
 	--print("Updating auras on "..unit)
-	
+
 	if cfg.dispell[unit] and cfg.dispell[unit].Name then
 		cfg.dispell[unit].now=false
 	end
-	
+
 	if not UnitExists(unit) and cfg.aura_unit_id[unit] then
 		for aid,_ in pairs(cfg.aura_unit_id[unit]) do
 			lib.SaveAuraState(cfg.aura[aid].Name)
@@ -369,7 +366,7 @@ lib.UpdateAuraAll = function(unit)
 		end
 		return
 	end
-	
+
 	--buffs
 	for i=1,40 do
 		aname, _, acount, adispelType, aduration, aexpirationTime, aunitCaster, _, _, aid, canApplyAura, isBossDebuff, _,value1, value2, value3 = UnitAura(unit,i,"HELPFUL")
@@ -389,7 +386,7 @@ lib.UpdateAuraAll = function(unit)
 			end
 		end
 	end
-	
+
 	--debuffs
 	for i=1,40 do
 		aname, _, acount, adispelType, aduration, aexpirationTime, aunitCaster, _, _, aid, _,value1, value2, value3  = UnitAura(unit,i,"HARMFUL")
@@ -409,7 +406,7 @@ lib.UpdateAuraAll = function(unit)
 			end
 		end
 	end
-	
+
 	if cfg.aura_unit_id[unit] then
 		for aid,_ in pairs(cfg.aura_unit_id[unit]) do
 			if aid and cfg.aura_seen[aid] and cfg.aura_seen[aid]<UpdateAura_time then
@@ -420,7 +417,7 @@ lib.UpdateAuraAll = function(unit)
 			end
 		end
 	end
-	
+
 	if cfg.dispell[unit] and cfg.dispell[unit].now then cfg.Update=true end
 end
 
@@ -469,13 +466,13 @@ local change,key
 				func(aura.Name,num_func)
 			end
 		end
-		
+
 		if aura_old.value1~=aura.value1 and aura.OnValue1 then
 			for num_func,func in pairs(aura.OnValue1) do
 				func(aura.Name,num_func)
 			end
 		end
-		
+
 		if aura_old.value2~=aura.value2 and aura.OnValue2 then
 			for num_func,func in pairs(aura.OnValue2) do
 				func(aura.Name,num_func)
@@ -545,13 +542,13 @@ lib.IsAuraChanged = function(spell)
 				func(cfg.aura[spell].Name,num_func)
 			end
 		end
-		
+
 		if cfg.saura[spell].value1~=cfg.aura[spell].value1 and cfg.aura[spell].OnValue1 then
 			for num_func,func in pairs(cfg.aura[spell].OnValue1) do
 				func(cfg.aura[spell].Name,num_func)
 			end
 		end
-		
+
 		if cfg.saura[spell].value2~=cfg.aura[spell].value2 and cfg.aura[spell].OnValue2 then
 			for num_func,func in pairs(cfg.aura[spell].OnValue2) do
 				func(cfg.aura[spell].Name,num_func)
@@ -658,7 +655,7 @@ end
 
 local tl_aura,tl_caura
 -- options = any,min,max
-lib.GetAura = function(auras,option) 
+lib.GetAura = function(auras,option)
 	option=option or "any"
 	tl_aura = 0
 	if type(auras)~="table" then
@@ -670,7 +667,7 @@ lib.GetAura = function(auras,option)
 		end
 		if cfg.aura[n_aura] and cfg.aura[n_aura].present==1 then
 			tl_caura = (cfg.aura[n_aura].duration==0 and 9999 or math.max(0,cfg.aura[n_aura].expire-GetTime()))
-			if tl_caura>0 then 
+			if tl_caura>0 then
 				if option=="max" then
 					tl_aura=math.max(tl_aura,tl_caura)
 				elseif option=="min" then
@@ -706,7 +703,7 @@ local i_aura
 		if cfg.aura[n_aura] then
 			if cfg.aura[n_aura].present==1 then
 				tl_aura = (cfg.aura[n_aura].duration==0 and 9999 or math.max(0,cfg.aura[n_aura].expire-GetTime())
-				if tl_aura>0 then 
+				if tl_aura>0 then
 					notfound_aura=false
 					return tl_aura
 				end
@@ -751,7 +748,7 @@ lib.HasAuras = function(aura)
 	while notfound_aura do
 		n_aura=aura..i_aura
 		if cfg.aura[n_aura] then
-			if cfg.aura[n_aura].present==1 then 
+			if cfg.aura[n_aura].present==1 then
 				return true
 			end
 			i_aura=i_aura+1

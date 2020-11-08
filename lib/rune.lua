@@ -29,7 +29,7 @@ local runes_spec = {
 	[3] = 2
 	}
 cfg.RuneSet={[1]={1,2},[2]={3,4},[3]={5,6}}
-	
+
 lib.DK_events = function()
 	cfg.rune_type=runes_spec[GetSpecialization()]
 	cfg.Runes={}
@@ -39,16 +39,16 @@ lib.DK_events = function()
 	for i_runes = 1, 6 do
 		cfg.Runes[i_runes]={}
 	end
-	
+
 	lib.AddRunesFrame()
-	
+
 	function Heddclassevents.PLAYER_UNGHOST()
 		if lib.UpdateAllRunes() then
 			lib.UpdateAllSpells("rune")
 			cfg.Update=true
 		end
 	end
-	
+
 	function Heddclassevents.RUNE_POWER_UPDATE(rune,isEnergize)
 		--if rune then print(rune.." "..(isEnergize and "true" or "false")) end
 		--if isEnergize then print(rune.." energized") end
@@ -57,7 +57,7 @@ lib.DK_events = function()
 			cfg.Update=true
 		end
 	end
-	
+
 	--Heddclassevents.RUNE_TYPE_UPDATE=Heddclassevents.RUNE_POWER_UPDATE
 end
 
@@ -128,7 +128,7 @@ end
 lib.AddRuneSpell = function(spell,ids,runemask,addbuff,powerCost_real,nointerupt)
 	if lib.AddSpell(spell,ids,addbuff,powerCost_real,nointerupt) then
 		--cfg.spells[spell].rune=true
-		cfg.spells[spell].powerType="rune"
+		-- cfg.spells[spell].powerType="rune"
 		cfg.spells[spell].nousecheck=true
 		cfg.spells[spell].red = runemask[1]
 		cfg.spells[spell].green = runemask[2]
@@ -178,7 +178,7 @@ lib.OnUpdateRune = function (self, elapsed) --Heddframe.runes[rune]=self
 		else
 			self.text:SetText("")
 		end
-	end	
+	end
 end
 
 local i_runes
@@ -218,15 +218,15 @@ lib.RunesOptionsToggle = function()
 		lib.HideFrame(Heddframe.runes)
 	end
 end
-	
+
 lib.GetDepletedRune = function()
 	return (cfg.RuneTypesInfo[cfg.rune_type].num-cfg.RuneTypesInfo[cfg.rune_type].ready)
 end
-	
+
 lib.GetNumRune = function()
 	return cfg.RuneTypesInfo[cfg.rune_type].num
 end
-	
+
 lib.AddRuneSpell = function(spell,ids,runemask,addbuff)
 	if lib.AddSpell(spell,ids,addbuff) then
 		if type(runemask)=="number" then
@@ -234,7 +234,7 @@ lib.AddRuneSpell = function(spell,ids,runemask,addbuff)
 		else
 			cfg.spells[spell].numrunes = runemask[1]+runemask[2]+runemask[3]
 		end
-		cfg.spells[spell].powerType="rune"
+		-- cfg.spells[spell].powerType="rune"
 		cfg.spells[spell].nousecheck=true
 		lib.UpdateSpell(spell)
 		return true
@@ -253,7 +253,7 @@ local runeType
 					cfg.RunesInfo.ready=cfg.RunesInfo.ready+1
 				else
 					cfg.RunesInfo.ready=cfg.RunesInfo.ready-1
-					if cfg.RunesInfo.ready<0 then 
+					if cfg.RunesInfo.ready<0 then
 						cfg.RunesInfo.ready=0
 					end
 				end
@@ -277,7 +277,7 @@ lib.UpdateRune = function(rune)
 					cfg.RunesInfo.ready=cfg.RunesInfo.ready+1
 				else
 					cfg.RunesInfo.ready=cfg.RunesInfo.ready-1
-					if cfg.RunesInfo.ready<0 then 
+					if cfg.RunesInfo.ready<0 then
 						cfg.RunesInfo.ready=0
 					end
 				end
@@ -293,7 +293,7 @@ lib.UpdateRune = function(rune)
 	end
 	return false
 end
-	
+
 lib.GetNumRunesReadyCD = function(num)
 	if num==0 then return 0 end
 	num=num or 6

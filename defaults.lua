@@ -24,7 +24,7 @@ function lib.defaults()
 	cfg.target='normal'
 	cfg.class = select(2,UnitClass("player"))
 	cfg.npc={}
-	
+
 	cfg.Power={}
 	cfg.Power.now=UnitPower("player")
 	cfg.Power.type_num,cfg.Power.type=UnitPowerType("player")
@@ -33,51 +33,51 @@ function lib.defaults()
 	cfg.Power.real=cfg.Power.now
 	cfg.Power.local_type=_G[cfg.Power.type]
 	cfg.Power.onpower=nil
-	--cfg.Power.type_num=_G["SPELL_POWER_"..(select(2,UnitPowerType("player")))]
-	
+
 	cfg.AltPower={}
 	cfg.AltPower.now=0
 	cfg.AltPower.max=0
-	cfg.AltPower.type_num=cfg.Power.type_num
+	-- cfg.AltPower.type_num=cfg.Power.type_num
 	cfg.AltPower.func=nil
 	cfg.AltPower.local_type=nil
-	
+
 	--cfg.local_casttime=hedlib.BlizzPattern(_G["SPELL_CAST_TIME_SEC"])
 	--[[cfg.local_cd={}
 	table.insert(cfg.local_cd,hedlib.BlizzPattern(_G["SPELL_RECAST_TIME_SEC"]))
 	table.insert(cfg.local_cd,hedlib.BlizzPattern(_G["SPELL_RECAST_TIME_CHARGES_SEC"]))]]
-	cfg.local_cd=hedlib.BlizzPattern2({SPELL_RECAST_TIME_SEC,SPELL_RECAST_TIME_CHARGES_SEC})
+	--cfg.local_cd=hedlib.BlizzPattern2({SPELL_RECAST_TIME_SEC,SPELL_RECAST_TIME_CHARGES_SEC})
+	cfg.local_cd=hedlib.BlizzPattern(SPELL_RECAST_TIME_SEC)
 	cfg.lastUpdate=0
 	cfg.lastUpdateBar=0
 	cfg.nextUpdate=0
-	
+
 	cfg.GUID={}
 	cfg.GUID["player"] = UnitGUID("player") or 0
 	cfg.GUID["pet"] = UnitGUID("pet") or 0
-	cfg.GUID["target"] = UnitGUID("target") or 0 
-	
+	cfg.GUID["target"] = UnitGUID("target") or 0
+
 	cfg.mounted=IsMounted()
-	
+
 	cfg.gcd_spell=nil
 	cfg.classfound=nil
 	--cfg.now=GetTime()
 	cfg.timeleft=0
 	cfg.maxmintime = 21
 	cfg.ctimeleft = cfg.maxmintime
-	
+
 	cfg.health={}
 	cfg.health["target"]={}
 	-- cfg.health["target"].max=UnitHealthMax("target") or 0
 	-- cfg.health["target"].now=UnitHealth("target") or 0
 	-- cfg.health["target"].percent=(cfg.health["target"].max==0) and 100 or hedlib.round(cfg.health["target"].now*100/cfg.health["target"].max,0)
-	
+
 	cfg.health["player"]={}
 	-- cfg.health["player"].max=UnitHealthMax("target") or 0
 	-- cfg.health["player"].now=UnitHealth("target") or 0
 	-- cfg.health["player"].percent=(cfg.health["player"].max==0) and 100 or hedlib.round(cfg.health["player"].now*100/cfg.health["player"].max,0)
-	
+
 	cfg.nousecheck=false
-	
+
 	cfg.onupdate=nil
 	cfg.onpower=nil
 	cfg.onhealth=nil
@@ -90,12 +90,15 @@ function lib.defaults()
 	cfg.spell_alias = {}
 	cfg.spells_updating = {}
 	cfg.sspell = {}
+	cfg.spell_tt=_G["Hedd_Tooltip_test"] or CreateFrame('GameTooltip', "Hedd_Tooltip_test", nil, 'GameTooltipTemplate')
+	cfg.spell_tt:SetOwner(UIParent, 'ANCHOR_NONE')
+
 	cfg.sp_conv={}
 	cfg.id2aura={}
 	cfg.id2spell={}
 	cfg.aura = {}
 	cfg.aura_seen={}
-	
+
 	cfg.aura_unit_id = {}
 	cfg.aura_found={}
 	cfg.auras ={}
@@ -118,7 +121,7 @@ function lib.defaults()
 	cfg.spells_ignore ={
 		[GetSpellInfo(75)]=true --Auto Shot
 		}
-		
+
 	cfg.Weapons={}
 	cfg.Weapons.Main, _, _, cfg.Weapons.Off = GetWeaponEnchantInfo()
 	cfg.onGround = true
@@ -130,7 +133,7 @@ function lib.defaults()
 	cfg.numcase=0
 	cfg.heroism={[32182]=true,[2825]=true,[80353]=true,[90355]=true,[49016]=true,[178207]=true}
 	cfg.case_current="none"
-	
+
 	cfg.DOT={}
 	cfg.DOT.aura=nil
 	cfg.DOT.spell=nil
@@ -142,12 +145,12 @@ function lib.defaults()
 	cfg.DOT.Update=false
 	cfg.DOT.lastUpdate=0
 	cfg.DOT.func=nil
-		
+
 	cfg.TrackAura={}
 	cfg.TrackAura.aura=nil
 	cfg.TrackAura.max=0
 	cfg.TrackAura.targets={}
-	
+
 	cfg.shape={}
 	cfg.shape.name="human"
 	cfg.shape.id=0 --GetShapeshiftFormID()
@@ -174,10 +177,10 @@ function lib.defaults()
 	cfg.Interrupt.castid=nil
 	cfg.Interrupt.id=nil
 	cfg.Interrupt.notInterruptible=true
-	
-	
+
+
 	cfg.talents={}
-	
+
 	cfg.Casting={}
 	cfg.Casting.name=false
 	cfg.Casting.caststart=0
@@ -186,7 +189,7 @@ function lib.defaults()
 	cfg.Casting.cost=0
 	cfg.Casting.castid=false
 	cfg.Casting.id=false
-	
+
 	cfg.Channeling={}
 	cfg.Channeling.ischanneling=false
 	cfg.Channeling.cost=0
@@ -195,18 +198,18 @@ function lib.defaults()
 	cfg.Channeling.startTime=0
 	cfg.Channeling.endTime=0
 	cfg.Channeling.nointerupt=false
-	
+
 	cfg.fixspells={}
 	cfg.fixspells_func={}
 	cfg.fixspells_num=0
-	
+
 	cfg.pvp = UnitPlayerControlled("target")
 	cfg.Range ={}
 	cfg.RangeColor = {}
 	--cfg.inRange = nil
 	cfg.inRangeSpell="none"
 	cfg.norepeat=false
-	
+
 	lib.OnCleave=nil
 	cfg.Cleave=nil --{}
 	--[[cfg.Cleave["none"]={}
@@ -223,11 +226,11 @@ function lib.defaults()
 	cfg.Id2Cleave={}
 --	cfg.Id2Cleave={}
 --	cfg.cleave_id=
-	
+
 	cfg.NoSaveSpell = nil
 	cfg.SaveSpell = nil
 	cfg.MonitorSpells =false
-	
+
 	cfg.Artifact={}
 	cfg.Artifact.traits={}
 	cfg.traits = {}
@@ -256,6 +259,8 @@ function lib.defaults()
 	cfg.stagger_hp_ps =0
 	cfg.Brewmaster_Frame:UnregisterAllEvents()
 	cfg.Brewmaster_Frame:Hide()
+
+	cfg.pandemic_multiplier = 0.3
 end
 lib.defaults()
 
@@ -285,12 +290,14 @@ cfg.HasDOTEvent = {
 	["SPELL_PERIODIC_HEAL"]=true,
 	["SPELL_PERIODIC_MISSED"]=true
 	}
-	
+
 cfg.HasSpellEvent = {
+	["SPELL_PERIODIC_DAMAGE"]=true,
 	["SPELL_DAMAGE"]=true,
 	["SPELL_MISSED"]=true
 }
-
+cfg.ReloadSpell = {
+}
 
 
 cfg.tagetlvl={

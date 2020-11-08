@@ -4,6 +4,16 @@ local cfg = ns.cfg
 local lib = _G["HEDD_lib"] or CreateFrame("Frame","HEDD_lib")
 ns.lib = lib
 
+local temporaryPetBaseDurations = {
+	["Dreadstalker"] = 12,
+	["Vilefiend"] = 15,
+	["Wild Imp"] = 25,
+
+	["Ebon Gargoyle"] = 30,
+
+	["Default"] = 15,
+}
+
 lib.AddNPC = function(guid)
 	cfg.npc[guid]=cfg.npc[guid] or {}
 	return cfg.npc[guid]
@@ -27,13 +37,137 @@ lib.CleanNPCAll = function()
 	return nil
 end
 
+lib.GetTemporaryPetDuration = function(petName)
+	local baseDuration = temporaryPetBaseDurations[petName] or temporaryPetBaseDurations["Default"]
+	local hastePercent = UnitSpellHaste("player")/100
+	local totalDuration = (1 - hastePercent) * baseDuration
+	return totalDuration
+end
 
+lib.AddTemporaryPet = function(guid, unitName)
+	lib.InitTempPets()
+	cfg.tempPets[guid] = {}
+	cfg.tempPets[guid].name = unitName or ""
+	cfg.tempPets[guid].duration = lib.GetTemporaryPetDuration(cfg.tempPets[guid].name)
+	cfg.tempPets[guid].total_duration = cfg.tempPets[guid].duration
+	cfg.tempPets[guid].last_updated = GetTime()
+	-- print("Added temporary pet " .. unitName .. ": " .. guid)
+	return cfg.tempPets
+end
+
+lib.GetTemporaryPets = function()
+	lib.InitTempPets()
+	lib.UpdateTemporaryPets()
+	return cfg.tempPets
+end
+
+lib.GetTemporaryPetsByName = function(petName)
+	local tp = {}
+	for guid, t in pairs(lib.GetTemporaryPets()) do
+		if t.name == petName then
+			tp[guid] = t
+		end
+	end
+	return tp
+end
+
+lib.TemporaryPetCount = function(petName)
+	local tpc = 0
+	for guid, pet in pairs(lib.GetTemporaryPets()) do
+		if petName == nil or pet.name == petName then
+			tpc = tpc + 1
+		end
+	end
+	return tpc
+end
+
+lib.HasTemporaryPet = function(petName)
+	for guid, t in pairs(lib.GetTemporaryPets()) do
+		if t.name == petName then
+			return true
+		end
+	end
+	return false
+end
+
+lib.UpdateTemporaryPet = function(guid)
+	local ctime = GetTime()
+	cfg.tempPets[guid].duration = cfg.tempPets[guid].duration - (ctime - cfg.tempPets[guid].last_updated)
+	cfg.tempPets[guid].last_updated = ctime
+	if cfg.tempPets[guid].duration <= 0 then
+		lib.RemoveTemporaryPet(guid)
+	end
+	return cfg.tempPets[guid]
+end
+
+lib.UpdateTemporaryPets = function()
+	for guid, t in pairs(cfg.tempPets) do
+		lib.UpdateTemporaryPet(guid)
+	end
+	return cfg.tempPets
+end
+
+lib.IncreaseTemporaryPetDuration = function(t)
+	local hastePercent = UnitSpellHaste("player")/100
+	local secondsToAdd = (1 - hastePercent) * t
+	for guid, pet in pairs(lib.GetTemporaryPets()) do
+		cfg.tempPets[guid].duration = cfg.tempPets[guid].duration + secondsToAdd
+	end
+	return cfg.tempPets
+end
+
+lib.KillTemporaryPets = function(petName, count)
+	if count == nil then
+		for petGUID, pet in pairs(lib.GetTemporaryPetsByName(petName)) do
+			lib.RemoveTemporaryPet(petGUID)
+		end
+	else
+		for i=1, count do
+			local petGUID = lib.GetLowestDurationTemporaryPet(petName)
+			if petGUID ~= nil then
+				-- print("Killing temporary pet: " .. petGUID)
+				lib.RemoveTemporaryPet(petGUID)
+			end
+		end
+	end
+	return cfg.tempPets
+end
+
+lib.GetLowestDurationTemporaryPet = function(petName)
+	local ldtpGUID = nil
+	for guid, pet in pairs(lib.GetTemporaryPetsByName(petName)) do
+		if ldtpGUID == nil then
+			ldtpGUID = guid
+		else
+			if pet.duration < cfg.tempPets[ldtpGUID].duration then
+				ldtpGUID = guid
+			end
+		end
+	end
+	return ldtpGUID
+end
+
+lib.RemoveTemporaryPet = function(guid)
+	lib.InitTempPets()
+	if cfg.tempPets[guid] ~= nil then
+		-- print("Removed temporary pet " .. cfg.tempPets[guid].name .. ": " .. guid)
+		cfg.tempPets[guid] = nil
+	end
+	return cfg.tempPets
+end
+
+lib.InitTempPets = function(force)
+	if cfg.tempPets == nil and not force then
+		cfg.tempPets = {}
+	end
+	return cfg.tempPets
+end
 
 lib.inrange = function(spell)
 	if cfg.GUID["target"]==0 then return true end
-	if cfg.spells[spell] and cfg.spells[spell].spellbook then 
+	if cfg.spells[spell] and cfg.spells[spell].spellbook then
 		if IsSpellInRange(lib.FindSpellBookSlotBySpellID(spell),BOOKTYPE_SPELL,"target")==1 then
-			if not cfg.spells[spell].inrange then 
+			if not cfg.spells[spell].inrange then
 				lib.UpdateSpell(spell)
 				cfg.Update=true
 			end
@@ -41,7 +175,7 @@ lib.inrange = function(spell)
 			return true
 		else
 			if cfg.spells[spell].inrange then
-				lib.UpdateSpell(spell)			
+				lib.UpdateSpell(spell)
 				cfg.Update=true
 			end
 			cfg.spells[spell].inrange=false
@@ -61,7 +195,7 @@ lib.GroundUpdate = function()
 	else
 		cfg.onGround=true
 	end
-	
+
 	if onground~=cfg.onGround then
 		cfg.Update=true
 		return true
@@ -74,14 +208,14 @@ lib.UpdateShape = function()
 	hedlib.shallowCopy(cfg.shape,shape_old)
 	cfg.shape.form=GetShapeshiftForm()
 	if cfg.shape.form and cfg.shape.form>0 then
-		cfg.shape.SpellID=select(5,GetShapeshiftFormInfo(cfg.shape.form))
+		cfg.shape.SpellID=select(4,GetShapeshiftFormInfo(cfg.shape.form))
 	else
 		cfg.shape.SpellID=0
 	end
 	cfg.shape.id=GetShapeshiftFormID()
 	if cfg.shape.id and cfg.shapes[cfg.shape.id] then
 		cfg.shape.name=cfg.shapes[cfg.shape.id]
-	else 
+	else
 		cfg.shape.name="human"
 	end
 	if hedlib.ArrayNotChanged(cfg.shape,shape_old) then
@@ -130,7 +264,7 @@ end
 
 lib.ininstance=function()
 	if cfg.instance=="raid" or cfg.instance=="party" then
-		return true 
+		return true
 	else
 		return nil
 	end
@@ -514,7 +648,7 @@ function(self, event,  ...)
 				_, _, _, _, _, _, _, _, _, _, _, _, _, _, cfg.Bear_D5S_Frame.damage, _, _, _, _, cfg.Bear_D5S_Frame.absorbed = ...
 				cfg.Bear_D5S_Frame:UpdateDamage()
 			end
-		end 
+		end
 	end
 end)
 
@@ -547,10 +681,10 @@ end)
 lib.DumpOutfits=function()
 	for i=1,GetNumEquipmentSets() do
 		local name,icon,index = GetEquipmentSetInfo(i)
-		
+
 		print(i.." "..name.." "..index)
 	end
-end	
+end
 
 lib.UpdateOutfits=function()
 	cfg.Outfits={}
@@ -558,4 +692,4 @@ lib.UpdateOutfits=function()
 		local name,icon,index = GetEquipmentSetInfo(i)
 		cfg.Outfits[index]=name
 	end
-end	
+end

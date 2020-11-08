@@ -8,7 +8,7 @@ ns.lib = lib
 
 lib.UpdateCast = function(SpellID)
 	if SpellID==240022 then return end
-	cfg.Casting.name, _, _, cfg.Casting.caststart, cfg.Casting.castend, _, cfg.Casting.castid = UnitCastingInfo("player")
+	cfg.Casting.name, _,_, cfg.Casting.caststart, cfg.Casting.castend, _, cfg.Casting.castid = UnitCastingInfo("player")
 	if cfg.Casting.name and cfg.Casting.castid~=0 and cfg.Casting.castid~="0-0-0-0-0-0000000000" then
 		cfg.Casting.iscasting=true
 		cfg.Casting.caststart=cfg.Casting.caststart / 1e3
@@ -16,7 +16,7 @@ lib.UpdateCast = function(SpellID)
 		cfg.Casting.id=SpellID or lib.GetSpellIDbyName(cfg.Casting.name)
 		cfg.Casting.spell=cfg.id2spell[cfg.Casting.id] or cfg.Casting.id --"unknown"
 		cfg.Casting.cost=lib.GetSpellCost(cfg.Casting.spell)
-		
+
 		return true
 	else
 		cfg.Casting.iscasting=false
@@ -81,7 +81,7 @@ lib.IsChanneling = function()
 end
 
 lib.IsChannelingNoInterrupt = function()
-	if cfg.Channeling.ischanneling and cfg.Channeling.nointerupt then --and cfg.Channeling.endTime>GetTime() 
+	if cfg.Channeling.ischanneling and cfg.Channeling.nointerupt then --and cfg.Channeling.endTime>GetTime()
 		return true
 	else
 		return false
@@ -117,7 +117,7 @@ lib.SpellChannelingLeft=function(spell)
 		return math.max(0,cfg.Channeling.endTime-GetTime())
 	end
 	return 0
-	
+
 --[[	if lib.IsCasting() then
 		if (not spell) or (spell and cfg.spells[spell] and cfg.spells[spell].name==cfg.Casting.name) then
 			return math.max(0,(cfg.Casting.castend-GetTime()),lib.IsChannelingNoInterrupt() and (cfg.Channeling.endTime-GetTime()) or 0)
@@ -152,9 +152,7 @@ cfg.lastspell2=0
 
 lib.SaveCast = function(SpellID,spellname)
 	--print(SpellID.." - "..spellname)
-	if not SpellID then
-		return
-	end
+	if not SpellID then return end
 	cfg.spellcast[SpellID]=GetTime()
 	if cfg.NoSaveSpell and cfg.NoSaveSpell[SpellID] then return end
 	if cfg.SaveSpell and not cfg.SaveSpell[SpellID] then return end
@@ -204,7 +202,7 @@ lib.IsLastSpell = function(spell)
 				return true
 			end
 		end
-		
+
 	end
 	return false
 end
@@ -220,8 +218,8 @@ lib.GetLastSpell = function (spells)
 	return nil
 end
 
-lib.SetInterrupt = function(spell,ids,nousecheck,powerCost_real)
-	lib.AddSpell(spell,ids,nousecheck,powerCost_real)
+lib.SetInterrupt = function(spell,ids,addbuff,cost_real,nointerupt,nousecheck,noplayercheck)
+	lib.AddSpell(spell,ids,addbuff,cost_real,nointerupt,nousecheck,noplayercheck)
 	if cfg.spells[spell] then
 		cfg.Interrupt.spell=spell
 		cfg.case[spell] = function()

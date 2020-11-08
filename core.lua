@@ -48,9 +48,11 @@ end
 lib.reload=reload
 
 lib.basicevents = function()
+	--function Heddevents.UNIT_POWER_UPDATE(unit,powerType)
 	function Heddevents.UNIT_POWER_FREQUENT(unit,powerType)
 		if unit=="player" then
 			--print(powerType)
+			--print(GetTime())
 			lib.UpdatePower(powerType)
 		end
 	end
@@ -60,7 +62,7 @@ lib.basicevents = function()
 			lib.UpdateHealth(unitID)
 		end
 	end
-	
+
 	--Heddevents.SPELL_UPDATE_USABLE=lib.UpdateAllSpells
 	function Heddevents.SPELL_UPDATE_COOLDOWN()
 		lib.UpdateAllSpells()
@@ -68,10 +70,10 @@ lib.basicevents = function()
 		--print(GetSpellCooldown(107428))
 		--print("SPELL_UPDATE_USABLE")
 	end
-		
+
 	function Heddevents.UNIT_AURA(unitID)
 		--print(unitID)
-		if unitID and cfg.watchunits[unitID] then --and UnitExists(unitID) 
+		if unitID and cfg.watchunits[unitID] then --and UnitExists(unitID)
 			lib.UpdateAuraAll(unitID)
 		end
 		if unitID=="player" then
@@ -82,11 +84,11 @@ lib.basicevents = function()
 			--print("Update on Aura")
 			--lib.UpdateSpell("gcd")
 		end
-		--[[if cfg.TrackAura.aura and cfg.aura[cfg.TrackAura.aura] and cfg.aura[cfg.TrackAura.aura].unit==unitID then 
+		--[[if cfg.TrackAura.aura and cfg.aura[cfg.TrackAura.aura] and cfg.aura[cfg.TrackAura.aura].unit==unitID then
 			lib.UpdateAuraFrame()
 		end]]
 	end
-	
+
 	function Heddevents.PLAYER_TARGET_CHANGED()
 		lib.UpdateTarget()
 		lib.UpdateTargetCast()
@@ -100,7 +102,7 @@ lib.basicevents = function()
 		if lib.OnTargetChanged then lib.OnTargetChanged() end
 		cfg.Update=true
 	end
-	
+
 	function Heddevents.UNIT_PET(unitID)
 		if unitID=="player" then
 			lib.UpdatePet()
@@ -108,57 +110,60 @@ lib.basicevents = function()
 		end
 	end
 
-	function Heddevents.UNIT_SPELLCAST_START(u, spellName, rank, castid, SpellID)
+	function Heddevents.UNIT_SPELLCAST_START(u, castId, spellId)
+		local spellName = GetSpellNameById(spellId)
 		if u=="target" then
-			lib.UpdateTargetCast(SpellID)
+			lib.UpdateTargetCast(spellId)
 			return
 		end
-		if castid=="0-0-0-0-0-0000000000" then return end
+		if castId=="0-0-0-0-0-0000000000" then return end
 		if u=="player" then
-			if cfg.debugspells then print(GetTime().." UNIT_SPELLCAST_START "..spellName.." "..SpellID) end
-			lib.UpdateSpell(SpellID)
+			if cfg.debugspells then print(GetTime().." UNIT_SPELLCAST_START "..spellName.." "..spellId) end
+			lib.UpdateSpell(spellId)
 			lib.UpdateSpell("gcd")
-			lib.UpdateCast(SpellID)
+			lib.UpdateCast(spellId)
 			-- lib.SpellSwitchMode()
 			lib.UpdatePower(cfg.Power.type)
 			cfg.Update=true
 		end
 	end
-	
-	function Heddevents.UNIT_SPELLCAST_INTERRUPTED(u, spellName, rank, castid, SpellID)
+
+	function Heddevents.UNIT_SPELLCAST_INTERRUPTED(u, castId, spellId)
+		local spellName = GetSpellNameById(spellId)
 		if u=="target" then
-			lib.UpdateTargetCast(SpellID)
-			--lib.UpdateTargetChannel(SpellID)
+			lib.UpdateTargetCast(spellId)
+			--lib.UpdateTargetChannel(spellId)
 			return
 		end
-		if castid=="0-0-0-0-0-0000000000" then return end
+		if castId=="0-0-0-0-0-0000000000" then return end
 		if u=="player" then
-			lib.UpdateSpell(SpellID)
+			lib.UpdateSpell(spellId)
 			lib.UpdateSpell("gcd")
-			if cfg.Casting.castid==castid then
-				if cfg.debugspells then print(GetTime().." UNIT_SPELLCAST_INTERRUPTED "..spellName.." "..SpellID) end
-				lib.UpdateCast(SpellID)
+			if cfg.Casting.castId==castId then
+				if cfg.debugspells then print(GetTime().." UNIT_SPELLCAST_INTERRUPTED "..spellName.." "..spellId) end
+				lib.UpdateCast(spellId)
 				lib.UpdatePower(cfg.Power.type)
 				--lib.UpdateAllSpells()
 			end
 			cfg.Update=true
 		end
 	end
-	
+
 	Heddevents.UNIT_SPELLCAST_STOP=Heddevents.UNIT_SPELLCAST_INTERRUPTED
-	
-	function Heddevents.UNIT_SPELLCAST_DELAYED(u, spellName, rank, castid, SpellID)
+
+	function Heddevents.UNIT_SPELLCAST_DELAYED(u, castId, spellId)
+		local spellName = GetSpellNameById(spellId)
 		if u=="target" then
-			lib.UpdateTargetCast(SpellID)
+			lib.UpdateTargetCast(spellId)
 			return
 		end
-		if castid=="0-0-0-0-0-0000000000" then return end
+		if castId=="0-0-0-0-0-0000000000" then return end
 		if u=="player" then
-			lib.UpdateSpell(SpellID)
+			lib.UpdateSpell(spellId)
 			lib.UpdateSpell("gcd")
-			if cfg.Casting.castid~=castid then
-				if cfg.debugspells then print(GetTime().." UNIT_SPELLCAST_DELAYED "..spellName.." "..SpellID) end
-				lib.UpdateCast(SpellID)
+			if cfg.Casting.castId~=castId then
+				if cfg.debugspells then print(GetTime().." UNIT_SPELLCAST_DELAYED "..spellName.." "..spellId) end
+				lib.UpdateCast(spellId)
 				lib.UpdatePower(cfg.Power.type)
 				--lib.UpdateAllSpells()
 			end
@@ -166,29 +171,33 @@ lib.basicevents = function()
 			return
 		end
 	end
-	
-	function Heddevents.UNIT_SPELLCAST_SUCCEEDED(u, spellName, rank, castid, SpellID)
+
+	function Heddevents.UNIT_SPELLCAST_SUCCEEDED(u, castId, spellId)
+		local spellName = GetSpellNameById(spellId)
+		if u=="player" and cfg.ReloadSpell[spellId] then
+			reload(Heddtalents,spellName)
+		end
 		if u=="target" then
-			lib.UpdateTargetCast(SpellID)
-			--lib.UpdateTargetChannel(SpellID)
+			lib.UpdateTargetCast(spellId)
+			--lib.UpdateTargetChannel(spellId)
 			return
 		end
-		if castid=="0-0-0-0-0-0000000000" then return end
+		if castId=="0-0-0-0-0-0000000000" then return end
 		if u=="player" and not cfg.spells_ignore[spellName] then
-			if cfg.debugspells then print(GetTime().." UNIT_SPELLCAST_SUCCEEDED "..spellName.." "..SpellID) end
-			lib.UpdateSpell(SpellID,true)
+			if cfg.debugspells then print(GetTime().." UNIT_SPELLCAST_SUCCEEDED "..spellName.." "..spellId) end
+			lib.UpdateSpell(spellId,true)
 			lib.UpdateSpell("gcd")
-			if cfg.spells[cfg.id2spell[SpellID]] and cfg.spells[cfg.id2spell[SpellID]].oncast then cfg.spells[cfg.id2spell[SpellID]].oncast(SpellID) end
-			lib.UpdateCast(SpellID)
-			lib.SaveCast(SpellID,spellName)
+			if cfg.spells[cfg.id2spell[spellId]] and cfg.spells[cfg.id2spell[spellId]].oncast then cfg.spells[cfg.id2spell[spellId]].oncast(spellId) end
+			lib.UpdateCast(spellId)
+			lib.SaveCast(spellId,spellName)
 			lib.UpdatePower(cfg.Power.type)
-			if cfg.Cleave and cfg.Id2Cleave[SpellID] then
-				lib.ResetCleave(cfg.Id2Cleave[SpellID])
+			if cfg.Cleave and cfg.Id2Cleave[spellId] then
+				lib.ResetCleave(cfg.Id2Cleave[spellId])
 			end
 			cfg.Update=true
 		end
 	end
-	
+
 	function Heddevents.UNIT_SPELLCAST_INTERRUPTIBLE(u)
 		if u=="target" then
 			lib.UpdateTargetCast()
@@ -196,83 +205,93 @@ lib.basicevents = function()
 			return
 		end
 	end
-	
+
 	Heddevents.UNIT_SPELLCAST_NOT_INTERRUPTIBLE=Heddevents.UNIT_SPELLCAST_INTERRUPTIBLE
-	
-	function Heddevents.UNIT_SPELLCAST_CHANNEL_START(u, spellName, rank, castid, SpellID)
+
+	function Heddevents.UNIT_SPELLCAST_CHANNEL_START(u, castId, spellId)
+		local spellName = GetSpellNameById(spellId)
 		if u=="target" then
-			lib.UpdateTargetCast(SpellID)
+			lib.UpdateTargetCast(spellId)
 			return
 		end
 		if u=="player"  then
 			if cfg.debugspells then print(GetTime().." UNIT_SPELLCAST_CHANNEL_START "..spellName) end
-			lib.UpdateChannel(SpellID)
+			lib.UpdateChannel(spellId)
 			-- lib.SpellSwitchMode()
 			cfg.Update=true
 		end
 	end
-	
-	function Heddevents.UNIT_SPELLCAST_CHANNEL_UPDATE(u, spellName, rank, castid, SpellID)
+
+	function Heddevents.UNIT_SPELLCAST_CHANNEL_UPDATE(u, spellName, rank, castId, spellId)
 		if u=="target" then
-			lib.UpdateTargetCast(SpellID)
+			lib.UpdateTargetCast(spellId)
 			return
 		end
 		if u=="player"  then
 			if cfg.debugspells then print(GetTime().." UNIT_SPELLCAST_CHANNEL_UPDATE "..spellName) end
-			lib.UpdateChannel(SpellID)
+			lib.UpdateChannel(spellId)
 			-- lib.SpellSwitchMode()
 			cfg.Update=true
 		end
 	end
-	
-	function Heddevents.UNIT_SPELLCAST_CHANNEL_STOP(u, spellName, rank, castid, SpellID)
+
+	function Heddevents.UNIT_SPELLCAST_CHANNEL_STOP(u, castId, spellId)
+		local spellName = GetSpellNameById(spellId)
 		if u=="target" then
 			lib.UpdateTargetCast()
 			return
 		end
 		if u=="player"  then
 			if cfg.debugspells then print(GetTime().." UNIT_SPELLCAST_CHANNEL_STOP "..spellName) end
-			lib.UpdateChannel(SpellID)
-			--lib.SaveCast(SpellID)
+			lib.UpdateChannel(spellId)
+			--lib.SaveCast(spellId)
 			-- lib.SpellSwitchMode()
 			cfg.Update=true
 		end
 	end
-	
+
 	function Heddevents.COMBAT_LOG_EVENT_UNFILTERED()
-		local timeStamp, eventtype,_,sourceGUID,sourceName,_,_,destGUID,destName,destFlags,_,SpellID,spellName,_,_,interrupt = CombatLogGetCurrentEventInfo()
+		local timeStamp, eventtype,_,sourceGUID,sourceName,_,_,destGUID,destName,destFlags,_,spellId,spellName,_,_,interrupt = CombatLogGetCurrentEventInfo()
 		if eventtype == "UNIT_DIED" or eventtype == "UNIT_DESTROYED" or eventtype == "UNIT_DISSIPATES" then
 			lib.RemoveNPC(destGUID)
+		end
+		-- Can't get UnitGUID("pet") here because it's not available yet when the SPELL_SUMMON event fires
+		if eventtype == "SPELL_SUMMON" and sourceGUID == UnitGUID("player") and not destGUID:find("^Pet") then
+			lib.AddTemporaryPet(destGUID, destName)
 		end
 		if cfg.Cleave then
 			if sourceGUID == cfg.GUID["player"] and bit.band(destFlags,COMBATLOG_OBJECT_TYPE_NPC)>0 then
 				if cfg.HasSpellEvent[eventtype] then
-					lib.AddCleaveTarget(SpellID,destGUID,timeStamp,eventtype)
+					lib.AddCleaveTarget(spellId,destGUID,timeStamp,eventtype)
 				elseif string.find(eventtype,"SWING") then
 					lib.AddCleaveTarget("swing",destGUID,timeStamp,eventtype)
+				--[[else
+					spellId = spellId or "no"
+					print(eventtype.." "..spellId)]]
 				end
+
 			end
 		end
 		if cfg.DOT.aura then
 			if cfg.HasDOTEvent[eventtype] then
-				if SpellID == cfg.aura[cfg.DOT.aura].id and sourceGUID == cfg.GUID["player"] then
+				if spellId == cfg.aura[cfg.DOT.aura].id and sourceGUID == cfg.GUID["player"] then
 					lib.AddDOT(destGUID)
 				end
-			elseif eventtype == "SPELL_AURA_REMOVED" and SpellID == cfg.aura[cfg.DOT.aura].id and sourceGUID == cfg.GUID["player"] then
+			elseif eventtype == "SPELL_AURA_REMOVED" and spellId == cfg.aura[cfg.DOT.aura].id and sourceGUID == cfg.GUID["player"] then
 				lib.DelDOT(destGUID)
 			end
 		end
 		if sourceGUID == cfg.GUID["player"] then
 			if eventtype == "SPELL_CAST_SUCCESS" then
-				if cfg.debugspells then print(GetTime().." COMBATLOG (SPELL_CAST_SUCCESS) "..spellName.." "..SpellID) end
-				if cfg.id2spell[SpellID] and cfg.spells[cfg.id2spell[SpellID]] then 
-					cfg.spells[cfg.id2spell[SpellID]].guid=destGUID
-					cfg.spells[cfg.id2spell[SpellID]].lastcast=GetTime()
+				if cfg.debugspells then print(GetTime().." COMBATLOG (SPELL_CAST_SUCCESS) "..spellName.." "..spellId) end
+				if cfg.id2spell[spellId] and cfg.spells[cfg.id2spell[spellId]] then
+					cfg.spells[cfg.id2spell[spellId]].guid=destGUID
+					cfg.spells[cfg.id2spell[spellId]].lastcast=GetTime()
 				end
 			end
 		end
 	end
-	
+
 	function Heddevents.PLAYER_ENTERING_WORLD()
 		Heddevents.PLAYER_TARGET_CHANGED()
 		for unitID,_ in pairs(cfg.watchunits) do
@@ -281,32 +300,32 @@ lib.basicevents = function()
 				Heddevents.UNIT_HEALTH_FREQUENT(unitID)
 			end
 		end
-		Heddevents.UNIT_POWER_FREQUENT("player")
+		-- Heddevents.UNIT_POWER_UPDATE("player")
 		lib.UpdateShape()
 		lib.UpdateAllSpells()
 		--lib.UpdateSpell("gcd")
 --		lib.instance()
 		cfg.Update=true
 	end
-	
+
 	function Heddevents.PET_BATTLE_OPENING_START()
 		if cfg.combat then return end
 		if C_PetBattles.IsInBattle() then
 			lib.HideFrame(Heddmain)
 		end
 	end
-	
+
 	--Heddevents.PET_BATTLE_OPENING_START=Heddevents.PLAYER_CONTROL_LOST
-	
+
 	function Heddevents.PET_BATTLE_CLOSE()
 		if cfg.combat then return end
 		if not C_PetBattles.IsInBattle() then
 			lib.ShowFrame(Heddmain)
 		end
 	end
-	
+
 	--Heddevents.PET_BATTLE_CLOSE=Heddevents.PLAYER_CONTROL_GAINED
-	
+
 	function Heddevents.PLAYER_REGEN_DISABLED()
 		cfg.combat=true
 		lib.MainOptionsToggle()
@@ -314,7 +333,7 @@ lib.basicevents = function()
 		if cfg.class=="DEATHKNIGHT" then lib.RunesOptionsToggle() end
 		cfg.Update=true
 	end
-	
+
 	function Heddevents.PLAYER_REGEN_ENABLED()
 		cfg.combat=false
 		lib.UpdateCast()
@@ -335,13 +354,17 @@ lib.basicevents = function()
 		end
 		cfg.Update=true
 	end
+
+	Heddevents.PLAYER_UNGHOST=Heddevents.PLAYER_REGEN_ENABLED
+	Heddevents.PLAYER_ALIVE=Heddevents.PLAYER_REGEN_ENABLED
+	Heddevents.PLAYER_DEAD=Heddevents.PLAYER_REGEN_ENABLED
 	
 	function Heddevents.UPDATE_SHAPESHIFT_FORM()
 		lib.UpdateShape()
 		lib.UpdatePower()
 		cfg.Update=true
 	end
-	
+
 	function Heddevents.ARTIFACT_UPDATE()
 		--lib.ArtifactScanTraits()
 		if lib.ArtifactScanTraits() then
@@ -350,14 +373,14 @@ lib.basicevents = function()
 		--print("ARTIFACT_UPDATE")
 		--cfg.Update=true
 	end
-	
+
 	function Heddevents.EQUIPMENT_SWAP_FINISHED(success,setid)
 		if cfg.combat then
 			cfg.OutfitEquip=setid
 		else
 			cfg.OutfitEquip=nil
 		end
-		
+
 	end
 end
 
@@ -387,7 +410,7 @@ end
 
 cfg.loaded_1st=nil
 function Heddtalents.reload(self,event,...) --self,
-	if cfg.loaded_1st and InCombatLockdown() then 
+	if cfg.loaded_1st and InCombatLockdown() then
 		cfg.combat_reset=true
 	end
 	event=event or Heddtalents.event or "nothing"
@@ -407,7 +430,7 @@ function Heddtalents.reload(self,event,...) --self,
 	Heddframe:UnregisterAllEvents()
 	Heddframe:SetScript("OnEvent",nil)
 	Heddframe:SetScript("OnUpdate",nil)
-	
+
 	if lib.classes[cfg.class] and lib.classes[cfg.class][cfg.talenttree] then
 		if not cfg.combat_reset then
 			Heddframe:Show()
@@ -426,7 +449,7 @@ function Heddtalents.reload(self,event,...) --self,
 		if lib.classpostload[cfg.class] then lib.classpostload[cfg.class]() end
 		lib.UpdateShape()
 		--lib.UpdateSet()
-		
+
 		if lib.mytal then lib.mytal() end
 		if not cfg.combat_reset then
 			if lib.CD then lib.CD() end
@@ -437,7 +460,7 @@ function Heddtalents.reload(self,event,...) --self,
 			cfg.numcase=cfg.numcase+1
 		end
 		cfg.numcase=cfg.numcase+1
-		
+
 		Heddframe:SetScript("OnEvent", function(self, event, ...)
 			if not cfg.classfound then return end
 			if cfg.debugevents then
@@ -445,20 +468,20 @@ function Heddtalents.reload(self,event,...) --self,
 			end
 			if Heddevents[event] then Heddevents[event](...) end
 			if Heddclassevents[event] then Heddclassevents[event](...) end
-			
+
 		end)
 
 		for k, v in pairs(Heddevents) do
 			Heddframe:RegisterEvent(k)
 		end
-		
+
 		for k, v in pairs(Heddclassevents) do
 			Heddframe:RegisterEvent(k)
 		end
 		Heddframe:SetScript("OnUpdate", Hedd_onupdate)
-		
+
 		Heddevents.PLAYER_ENTERING_WORLD()
-		if not cfg.combat_reset then 
+		if not cfg.combat_reset then
 			Heddframe:Show()
 		end
 		Heddmain.text:SetText(cfg.mode)
@@ -477,7 +500,7 @@ cfg.notloaded=true
 local function Heddframe_pew(self,...)
 	--if not GetSpellInfo(GetSpellInfo(6603)) then return nil end
 	--if not GetInventorySlotInfo("MainHandSlot") then return nil end
-	
+
 	if cfg.notloaded then
 		cfg.notloaded=nil
 		Heddframe:UnregisterAllEvents()
@@ -488,7 +511,7 @@ local function Heddframe_pew(self,...)
 		end);
 		BINDING_HEADER_HEDD_HEADER = "Hedd"
 		setglobal("BINDING_NAME_CLICK HEDD_FRAME:LeftButton", "Switch mode dps/aoe")
-		
+
 		_G.C_Timer.After(10, function()
 			--print("Loading in 5 seconds!")
 			Heddtalents.reload(Heddtalents,"PLAYER_ENTERING_WORLD")
@@ -498,26 +521,35 @@ local function Heddframe_pew(self,...)
 			--Heddtalents:RegisterEvent("ARTIFACT_UPDATE") --if HeddDB.artifact then end
 			Heddtalents:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
 		end)
-		
-		
+
+
 		--Heddtalents:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
 		--Heddtalents:RegisterEvent("CHARACTER_POINTS_CHANGED")
 		--Heddtalents:RegisterEvent("PLAYER_TALENT_UPDATE")
 		--Heddtalents:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
-		
-		--[[Heddtalents:SetScript("OnUpdate",function(...) 
+
+		--[[Heddtalents:SetScript("OnUpdate",function(...)
 		if (UnitOnTaxi("player") or C_PetBattles.IsInBattle()) then
 			if Heddframe:IsShown() then Heddframe:Hide() end
 			return
 		end
 		if not InCombatLockdown() and not Heddframe:IsShown() then
-			Heddframe:Show() 
+			Heddframe:Show()
 			return
 		end
-		
+
 		end)]]
-		
+
 	end
+end
+
+function GetSpellNameById(spellId)
+	local spell = Spell:CreateFromSpellID(spellId);
+	local spellName = ''
+	spell:ContinueOnSpellLoad(function()
+		spellName = spell:GetSpellName()
+	end)
+	return spellName
 end
 
 --hooksecurefunc("TalentFrame_Update",function(...) print("TalentFrame_Update") end)

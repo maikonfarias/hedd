@@ -15,7 +15,7 @@ lib.LoadSwingTimer = function(one)
 	Heddmain.swing:Show()
 	Heddmain.swing.events={}
 	--Heddmain.swing.Right.now,Heddmain.swing.Left.now=UnitAttackSpeed("player")
-	
+
 	Heddmain.swing.Right=Heddmain.swing.Right or CreateFrame("StatusBar", "$parent_Right", Heddmain.swing)
 	Heddmain.swing.Right:SetHeight(cfg.swing_height)
 	Heddmain.swing.Right:SetStatusBarTexture(cfg.statusbar_texture)
@@ -39,8 +39,8 @@ lib.LoadSwingTimer = function(one)
 	Heddmain.swing.Right.name="Right"
 	Heddmain.swing.Right:Show()
 	--hedlib.CreateBG(Heddmain.swing.Right,nil,"Red")
-		
-	
+
+
 	Heddmain.swing.Left=Heddmain.swing.Left or CreateFrame("StatusBar", "$parent_Left", Heddmain.swing)
 	Heddmain.swing.Left:SetHeight(cfg.swing_height)
 	Heddmain.swing.Left:SetStatusBarTexture(cfg.statusbar_texture)
@@ -54,7 +54,7 @@ lib.LoadSwingTimer = function(one)
 	Heddmain.swing.Left.Spark =  _G[Heddmain.swing.Left:GetName().."_SPARK"] or Heddmain.swing.Left:CreateTexture("$parent_SPARK", "OVERLAY")
 	Heddmain.swing.Left.Spark:SetTexture([[Interface\CastingBar\UI-CastingBar-Spark]])
 	Heddmain.swing.Left.Spark:SetSize(20, 20)
-	Heddmain.swing.Left.Spark:SetBlendMode("ADD") 
+	Heddmain.swing.Left.Spark:SetBlendMode("ADD")
 	Heddmain.swing.Left.Spark:SetPoint("CENTER", Heddmain.swing.Left, "LEFT", 0, 0)
 	Heddmain.swing.Left.Spark:Hide()
 	Heddmain.swing.Left.start = GetTime()
@@ -68,8 +68,8 @@ lib.LoadSwingTimer = function(one)
 	else
 		Heddmain.swing.Left:Hide()
 	end
-	
-	
+
+
 	function Heddmain.swing.events.UNIT_ATTACK_SPEED(self,unit)
 		if unit=="player" then
 			self.Right_new,self.Left_new=UnitAttackSpeed("player")
@@ -84,10 +84,10 @@ lib.LoadSwingTimer = function(one)
 		end
 	end
 	Heddmain.swing.events.UNIT_ATTACK_SPEED("player")
-	
-	function Heddmain.swing.events.COMBAT_LOG_EVENT_UNFILTERED()
-		local self,_,event,_,src_guid = CombatLogGetCurrentEventInfo()
-		if string.find(event,"SWING") and ( src_guid == cfg.GUID["player"] ) then -- string.sub(event,1,5) == "SWING" ) 
+
+	function Heddmain.swing.events.COMBAT_LOG_EVENT_UNFILTERED(self)
+		local _, event, _, src_guid = CombatLogGetCurrentEventInfo()
+		if string.find(event,"SWING") and ( src_guid == cfg.GUID["player"] ) then -- string.sub(event,1,5) == "SWING" )
 			if self.Left.cd>0 then
 				if (self.Right.cd-self.Right.duration)<=(self.Left.cd-self.Left.duration) then --(self.Right.last+self.Right.cd)>self.Right.now
 					lib.ResetSwing(self.Right)
@@ -99,13 +99,13 @@ lib.LoadSwingTimer = function(one)
 			end
 		end
 	end
-	
+
 	lib.ResetSwing=function(self)
 		self.last=GetTime()
 		self.duration=0
 		--print("Reset "..self.name)
 	end
-	
+
 	lib.GetSwingCD=function(num)
 		num=num or 0
 		if Heddmain.swing.Left.cd>0 then
@@ -113,7 +113,7 @@ lib.LoadSwingTimer = function(one)
 		end
 		return (Heddmain.swing.Right.cd-Heddmain.swing.Right.duration+num*Heddmain.swing.Right.cd)
 	end
-	
+
 	lib.OnUpdateSwing=function(self, elapsed)
 		self.now=GetTime()
 		if self.duration<self.cd then --(self.last+self.cd)>self.now
@@ -127,9 +127,9 @@ lib.LoadSwingTimer = function(one)
 			--self.Spark:Hide()
 		end
 	end
-	
-	
-	
+
+
+
 	Heddmain.swing:SetScript("OnEvent", function(self, event, ...)
 		Heddmain.swing.events[event](self,...)
 	end)

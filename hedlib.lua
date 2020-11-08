@@ -1,8 +1,8 @@
 -- holder for some lib functions
 local cur_version=18
-if _G["HED_LIB"] and hedlib.ver>=cur_version then 
+if _G["HED_LIB"] and hedlib.ver>=cur_version then
 	-- print ("Hed_lib "..cur_version.." is already")
-	else 
+	else
 
 hedlib = _G["HED_LIB"] or CreateFrame("Frame","HED_LIB",UIParent)
 hedlib.ver=cur_version
@@ -10,11 +10,11 @@ hedlib.ver=cur_version
 --print("Hedd_lib version "..cur_version)
 
 --// CHILL CODE ™ //--
--- table.ordered( [comp] ) 
+-- table.ordered( [comp] )
 --
 -- Lua 5.x add-on for the table library.
 -- Table using sorted index.  Uses binary table for fast Lookup.
--- http://lua-users.org/wiki/OrderedTable by PhilippeFremy 
+-- http://lua-users.org/wiki/OrderedTable by PhilippeFremy
 
 -- table.ordered( [comp] )
 -- Returns an ordered table. Can only take strings as index.
@@ -22,7 +22,7 @@ hedlib.ver=cur_version
 -- fcomp in table.sort( t [, fcomp] ).
 function table.ordered(fcomp)
   local newmetatable = {}
-  
+
   -- sort func
   newmetatable.fcomp = fcomp
 
@@ -54,8 +54,8 @@ function table.ordered(fcomp)
 
   -- set metatable
   return setmetatable(newtable, newmetatable)
-end 
-		
+end
+
 --// table.binsert( table, value [, comp] )
 --
 -- LUA 5.x add-on for the table library.
@@ -134,14 +134,14 @@ end
 hedlib.siValue = function(val)
 	if val==0 then
 		return ""
-	elseif val >= 10000000 or val <= -10000000 then 
-        return string.format("%.1fm", val / 1000000) 
+	elseif val >= 10000000 or val <= -10000000 then
+        return string.format("%.1fm", val / 1000000)
     elseif val >= 1000000 or val <= -1000000 then
-        return string.format("%.2fm", val / 1000000) 
+        return string.format("%.2fm", val / 1000000)
     elseif val >= 100000 or val <= -100000 then
-        return string.format("%.0fk", val / 1000) 
+        return string.format("%.0fk", val / 1000)
     elseif val >= 1000 or val <= -1000 then
-        return string.format("%.1fk", val / 1000) 
+        return string.format("%.1fk", val / 1000)
 	elseif val >= 10 or val <= -10 then
 		return ceil(val)
     else
@@ -182,16 +182,16 @@ end
 hedlib.CreateBD = function(f,border,color, bgcolor,texture,edge)
 	color = color or {1,0,0,1}
 	border = border or 5
-	local backdrop_tab = { 
-    bgFile = texture or hedlib.backdrop_texture, 
+	local backdrop_tab = {
+    bgFile = texture or hedlib.backdrop_texture,
     edgeFile = edge or hedlib.backdrop_edge_texture,
     tile = false,
-    tileSize = 0, 
-    edgeSize = border, 
-    insets = { 
-      left = border, 
-      right = border, 
-      top = border, 
+    tileSize = 0,
+    edgeSize = border,
+    insets = {
+      left = border,
+      right = border,
+      top = border,
       bottom = border,
     },
   	}
@@ -221,7 +221,7 @@ hedlib.CreateBG=function(f,border,coltex,color)
 		if color then
 			f.bg:SetVertexColor(unpack(color))
 		end
-	else	
+	else
 		f.bg:SetTexture(unpack(coltex))
 	end
 	return f.bg
@@ -242,7 +242,7 @@ hedlib.CreateOverlay=function(f,border,coltex,color)
 		if color then
 			f.overlay:SetVertexColor(unpack(color))
 		end
-	else	
+	else
 		f.overlay:SetTexture(unpack(coltex))
 	end
 	return f.overlay
@@ -255,14 +255,14 @@ hedlib.TableLength=function(T)
 end
 
 hedlib.CreateFont = function(f, font, size, outline,name) --,bg
-	if size then 
-		if size<1 then 
+	if size then
+		if size<1 then
 			size = hedlib.fontsize(f:GetHeight())+size
 		end
 	else
 		size = hedlib.fontsize(f:GetHeight())
 	end
-	
+
 	local fs = f:CreateFontString(name and (f:GetName() and f:GetName().."_"..name or nil) or (f:GetName() and f:GetName().."_text" or nil), "OVERLAY")
 	fs:SetFont(font, size, outline)
 	fs:SetShadowColor(0,0,0,1)
@@ -270,7 +270,7 @@ hedlib.CreateFont = function(f, font, size, outline,name) --,bg
 		hedlib.CreateBG(f,1,nil,{1,0,0})
 	end]]
 	return fs
-end  
+end
 
 hedlib.UpdateFS=function(f, size, justify)
     local fo,si,fl=f:GetFont()
@@ -288,7 +288,7 @@ hedlib.ColorGradient = function(perc, ...)
 		local r, g, b = ...
 		return r, g, b
 	end
-	
+
 	local num = select('#', ...) / 3
 
 	local segment, relperc = math.modf(perc*(num-1))
@@ -319,7 +319,7 @@ hedlib.flash = function(sec,color)
 --		self.elapsed = 0
 		self:SetAlpha(0)
 	end)
-	
+
 	flashframe:SetScript("OnUpdate", function(self, elapsed)
 		elapsed = self.elapsed + elapsed
 		if elapsed >= flashsec then
@@ -377,7 +377,7 @@ hedlib.Warning = function(t,i,color)
 	else
 		hedlib.textframe.icon:Hide()
 	end
-	if hedlib.textframe:IsShown() then 
+	if hedlib.textframe:IsShown() then
 		hedlib.textframe.startTime=GetTime()
 	else
 	    FadingFrame_Show(hedlib.textframe)
@@ -422,7 +422,7 @@ hedlib.taddnewval = function(tab, val)
        return false
      end
    end
-   table.insert(tab, val)  
+   table.insert(tab, val)
    return true
 end
 
@@ -431,7 +431,7 @@ local tf,dot
 hedlib.tofloat = function(text,position)
 	if text then
 		text=string.gsub(text,",","%.")
-		if position=="end" then 
+		if position=="end" then
 			tf = string.match(text,"%d+%.?%d*$")
 			tf = tf or 0
 			return tonumber(tf)
@@ -452,7 +452,7 @@ hedlib.toint = function(text,position)
 	if text then
 		text=string.gsub(text,",","")
 		text=string.gsub(text,"%.","")
-		if position=="end" then 
+		if position=="end" then
 			tf = string.match(text,"%d+%.?%d*$")
 			tf = tf or 0
 			return tonumber(tf)
@@ -471,7 +471,7 @@ end
 
 local num
 hedlib.BlizzPattern = function(txt)
-	txt,num=string.gsub(txt,"%%.3g",".+")
+	txt,num=string.gsub(txt,"%%.2g",".+")
 	if num==0 then txt,num=string.gsub(txt,"%%d",".+") end
 	if num==0 then txt,num=string.gsub(txt,"%%s",".+") end
 	--string.gsub(txt,"|4;",".+") end
@@ -521,7 +521,7 @@ hedlib.PrintFrameRegions = function(frame)
 		if region then
 			text = region:GetObjectType() == "FontString" and region:GetText() or " "
 			print((region:GetName() or i).." ".." "..region:GetObjectType().." "..text) --string.gsub(text,"\n"," ")
-        end	
+        end
 	end
 end
 
@@ -535,7 +535,7 @@ hedlib.IsTextInTooltip = function(tt, txt)
             if string.find(text,txt) or string.match(text,txt) then
 				return text, region:GetName()
 			end
-        end	
+        end
 	end
 	return nil,nil
 end
@@ -545,7 +545,7 @@ hedlib.PrintTooltipLines = function(tt)
 		if region and region:GetObjectType() == "FontString" then
 			text = region:GetText() or " "
 			print(region:GetName().." "..text) --string.gsub(text,"\n"," ")
-        end	
+        end
 	end
 end
 
@@ -570,7 +570,7 @@ local reg
 hedlib.ScanTooltip = function(tt,txt,spell)
 	spell=spell or "null"
 	text,reg = hedlib.IsTextInTooltip(tt,txt)
-	--[[if text then 
+	--[[if text then
 		print(text.." found for "..spell)
 	else
 		print(txt.." not found for "..spell)
@@ -596,7 +596,7 @@ hedlib.SetDesaturation = function(texture, desaturation)
 		else
 			texture:SetVertexColor(1.0, 1.0, 1.0);
 		end
-		
+
 	end
 end
 
@@ -609,15 +609,15 @@ hedlib.addbox= function(name, toppoint,bottompoint,color,border,bcolor)
 	if bcolor == "CLASS" then
 		bcolor = hedlib.classcolor
 	end
-	
-	if color and color.r then 
+
+	if color and color.r then
 		color = {color.r,color.g,color.b}
 	end
-	
-	if bcolor and bcolor.r then 
+
+	if bcolor and bcolor.r then
 		bcolor = {bcolor.r,bcolor.g,bcolor.b}
 	end
-	
+
 	local box = _G["HED_"..name] or CreateFrame("Frame","HED_"..name)
 	box:SetParent(UIParent)
 	box:SetPoint(unpack(toppoint))
@@ -626,15 +626,15 @@ hedlib.addbox= function(name, toppoint,bottompoint,color,border,bcolor)
 	box.t = box:CreateTexture(nil, "BACKGROUND")
 	box.t:SetAllPoints(box)
 	box.t:SetTexture(unpack(color))
-		
+
 	if border then
 		box:SetBackdrop({
 			edgeFile = "Interface/Buttons/WHITE8X8",
 			edgeSize = border,
-			insets = { 
-				left = border, 
-				right = border, 
-				top = border, 
+			insets = {
+				left = border,
+				right = border,
+				top = border,
 				bottom = border,
 			},
 		})
@@ -682,14 +682,14 @@ hedlib.stringifyTable = function(t)
             v = tostring(v)
         end
         k = tostring(k)
- 
+
         -- add another entry to our stringified table
         entries[#entries + 1] = ("%s: %s\n"):format(k, v)
     end
- 
+
     -- the memory location of the table
     local id = tostring(t):sub(8)
- 
+
     return ("{%s}@%s"):format(table.concat(entries, ' = '), id)
 end
 
@@ -786,7 +786,7 @@ hedlib.ScanBagsSpell = function(spell) --OPENING
 		for slot = 1, GetContainerNumSlots(bag) do
 			local itemLink = GetContainerItemLink(bag, slot)
 			if itemLink and itemLink:match("item:%d+") then
-				local spellname, spellrank = GetItemSpell(itemLink)
+				local spellname = GetItemSpell(itemLink)
 				if spellname and spellname==spell then
 					local name = GetItemInfo(itemLink) or "no name"
 					print(bag.." "..slot.." "..name)
@@ -796,25 +796,25 @@ hedlib.ScanBagsSpell = function(spell) --OPENING
 	end
 end
 
-hedlib.PowerType={}
-
-for n, val in pairs(_G) do
-	if string.match(n,"^SPELL_POWER_.*") then
-		hedlib.PowerType[val]=string.gsub(n,"SPELL_POWER_","")
-	end
-end
+-- hedlib.PowerType={}
+--
+-- for n, val in pairs(_G) do
+-- 	if string.match(n,"^SPELL_POWER_.*") then
+-- 		hedlib.PowerType[val]=string.gsub(n,"SPELL_POWER_","")
+-- 	end
+-- end
 
 hedlib.Addon={}
 
 hedlib.AddonMem = function(addon)
 	if GetAddOnInfo(addon) then
 		UpdateAddOnMemoryUsage()
-		if hedlib.Addon[addon] then 
+		if hedlib.Addon[addon] then
 			hedlib.Addon[addon].pmem=hedlib.Addon[addon].mem
 		else
 			hedlib.Addon[addon]={}
 		end
-		
+
 		hedlib.Addon[addon].mem=GetAddOnMemoryUsage(addon)
 		if hedlib.Addon[addon].pmem and hedlib.Addon[addon].pmem~=hedlib.Addon[addon].mem then
 			return (hedlib.Addon[addon].mem-hedlib.Addon[addon].pmem),hedlib.Addon[addon].mem
@@ -842,7 +842,7 @@ for i,index,v in hedlib.orderedPairs(hedlib.COLORTABLE) do
   print(index, v)
 end]]
 
---[[function hedlib.dump(arr, indentLevel)
+function hedlib.dump(arr, indentLevel)
     local str = ""
     local indentStr = "#"
 
@@ -858,12 +858,12 @@ end]]
     for index,value in pairs(arr) do
         if type(value) == "table" then
             str = str..indentStr..index..": \n"..hedlib.dump(value, (indentLevel + 1))
-        else 
+        else
             str = str..indentStr..index..": "..value.."\n"
         end
     end
     return str
-end]]
+end
 
 
 function hedlib.dump( t )
@@ -905,7 +905,7 @@ function hedlib.dumpvar(data)
     local tablecache = {}
     local buffer = ""
     local padder = "    "
- 
+
     local function _dumpvar(d, depth)
         local t = type(d)
         local str = tostring(d)

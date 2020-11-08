@@ -124,7 +124,7 @@ lib.CDadd = function(spell,ids,addtimer,state,func)
 			else btn.shine:Hide() end
 		end
 		btn:SetScript("PostClick", function(self, button)
-			if button~="LeftButton" then 
+			if button~="LeftButton" then
 				lib.CDtoggle(spell)
 			end
 		end)
@@ -351,7 +351,7 @@ lib.Itemadd = function(item)
 	if not item then return nil end
 	local texture=select(10,GetItemInfo(item))
 	if not texture then return nil end
-	
+
 	local btn = _G["HEDD_CD_"..item] or CreateFrame("Button", "HEDD_CD_"..item, Heddframe.CD, "SecureActionButtonTemplate,ActionButtonTemplate")
 	btn.itemID=item
 	lib.FrameResize(btn,HeddDB.cdsize or cfg.cdsize)
@@ -368,8 +368,8 @@ lib.Itemadd = function(item)
 		btn:SetPoint("LEFT",("HEDD_CD_"..cfg.cd_last),"RIGHT",10,0)
 	end
 	cfg.cd_last=item
-	
-	
+
+
 	local cd = _G["HEDD_CD_"..item.."Cooldown"] or CreateFrame("Cooldown", "$parentCooldown", btn, "CooldownFrameTemplate")
 	cd:SetAllPoints(true)
 	cd:SetFrameLevel(4)
@@ -426,7 +426,7 @@ lib.CDtoggleOn = function(spell)
 			end
 		end
 		--[[btn:SetScript("PostClick", function(self, button)
-			if button~="LeftButton" then 
+			if button~="LeftButton" then
 				lib.CDtoggle(spell)
 			end
 		end)]]
@@ -450,7 +450,7 @@ lib.CDtoggleOff = function(spell)
 			end
 		end
 		--[[btn:SetScript("PostClick", function(self, button)
-			if button~="LeftButton" then 
+			if button~="LeftButton" then
 				lib.CDtoggle(spell)
 			end
 		end)]]
@@ -611,3 +611,8 @@ lib.CDRefresh = function()
 	if lib.CD then lib.CD() end
 end
 
+lib.IsCDEnabled = function(spell)
+	if not cfg.spells[spell] or
+	not HeddDB.CD[cfg.spells[spell].id] then return false end
+	return HeddDB.CD[cfg.spells[spell].id].enabled
+end

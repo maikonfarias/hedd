@@ -15,10 +15,13 @@ local OptionsPanel = Heddframe.OptionsPanel
 cfg.move = false
 
 local move = function()
-	if ( cfg.move ) then
+	if UnitAffectingCombat("player") then
+		print("Hedd: Cannot enable/disable frame movement while in combat")
+		cfg.move = not cfg.move
+	elseif cfg.move then
 		Heddframe:RegisterForDrag("LeftButton")
 		Heddframe:SetScript("OnDragStart", function(Heddframe) Heddframe:StartMoving() end)
-		Heddframe:SetScript("OnDragStop", function(Heddframe) 
+		Heddframe:SetScript("OnDragStop", function(Heddframe)
 			Heddframe:StopMovingOrSizing()
 			Heddframe:SetUserPlaced(true)
 			local x, y = Heddframe:GetLeft(), Heddframe:GetBottom()
@@ -26,7 +29,7 @@ local move = function()
 		Heddframe.move:Show()
 		Heddframe.CD:RegisterForDrag("LeftButton")
 		Heddframe.CD:SetScript("OnDragStart", function() Heddframe.CD:StartMoving() end)
-		Heddframe.CD:SetScript("OnDragStop", function() 
+		Heddframe.CD:SetScript("OnDragStop", function()
 			Heddframe.CD:StopMovingOrSizing()
 			Heddframe.CD:SetUserPlaced(true)
 		end)
@@ -64,6 +67,8 @@ cfg.help["text"] = "/hedd text [1-9999]"
 cfg.help["aura"] = "/hedd aura [show/hide]"
 cfg.help["tracker"] = "/hedd tracker [show/hide]"
 cfg.help["dot"] = "/hedd dot [show/hide]"
+cfg.help["clickthrough"] = "/hedd clickthrough icons [on/off]"
+-- cfg.help["clickthrough"] = "/hedd clickthrough [icons/bar] [on/off]"
 cfg.help["cd"] = "/hedd cd size [1-9999]\n/hedd cd [show/hide] [SpellID]"
 cfg.help["spellflash"] = "/hedd spellflash ["
 for i,index,v in hedlib.orderedPairs(hedlib.COLORTABLE) do
@@ -80,6 +85,9 @@ lib.Hedd_slash = function(msg, editbox)
 		cfg.move = not cfg.move
 		move()
 	elseif command=="options" then
+		-- This is specifically called twice as a workaround.  There is a well-known
+		-- bug with InterfaceOptionsFrame_OpenToCategory that Blizzard hasn't fixed yet.
+		InterfaceOptionsFrame_OpenToCategory(Heddframe.OptionsPanel.name)
 		InterfaceOptionsFrame_OpenToCategory(Heddframe.OptionsPanel.name)
 	elseif command=="reset" then
 		Heddframe.OptionsPanel.reset()
@@ -238,6 +246,46 @@ lib.Hedd_slash = function(msg, editbox)
 		else
 			print("\nSyntax: \n"..help);
 		end]]
+	elseif command=="clickthrough" then
+		if rest ~= "" then
+			command, rest = rest:match("^(%S*)%s*(.-)$");
+			if command == "icons" then
+				if rest ~= "" then
+					command, rest = rest:match("^(%S*)%s*(.-)$");
+					if command == "off" then
+						HeddDB.clickthrough_icons = command
+						Heddframe:EnableMouse(true)
+					elseif command == "on" then
+						HeddDB.clickthrough_icons = command
+						Heddframe:EnableMouse(false)
+					else
+						print("\nSyntax: \n"..help);
+					end
+				else
+					print("\nSyntax: \n"..help);
+				end
+			-- TODO: This needs more work
+			-- elseif command == "bar" then
+			-- 	if rest ~= "" then
+			-- 		command, rest = rest:match("^(%S*)%s*(.-)$");
+			-- 		if command == "off" then
+			-- 			HeddDB.clickthrough_bar = command
+			-- 			Heddframe.CD:EnableMouse(true)
+			-- 		elseif command == "on" then
+			-- 			HeddDB.clickthrough_bar = command
+			-- 			Heddframe.CD:EnableMouse(false)
+			-- 		else
+			-- 			print("\nSyntax: \n"..help);
+			-- 		end
+			-- 	else
+			-- 		print("\nSyntax: \n"..help);
+			-- 	end
+			else
+				print("\nSyntax: \n"..help);
+			end
+		else
+			print("\nSyntax: \n"..help);
+		end
 	else
 		--[[for i,index,v in hedlib.orderedPairs(cfg.help) do
 			help=help..v.."\n"
@@ -247,7 +295,7 @@ lib.Hedd_slash = function(msg, editbox)
 		end
 		print("\nSyntax: \n"..help);
 	end
-	
+
 end
 
 
@@ -260,6 +308,8 @@ lib.MainRefresh = function()
 	lib.Hedd_slash("text "..HeddDB.tsize)
 	lib.Hedd_slash("aura "..HeddDB.Aura)
 	lib.Hedd_slash("dot "..HeddDB.DOT)
+	lib.Hedd_slash("clickthrough icons "..HeddDB.clickthrough_icons)
+	-- lib.Hedd_slash("clickthrough bar "..HeddDB.clickthrough_bar)
 	lib.Hedd_slash("cd size "..HeddDB.cdsize)
 	--lib.Hedd_slash("autoswitch "..HeddDB.autoswitch)
 	lib.Hedd_slash("spellflash "..HeddDB.spellflash)
@@ -276,6 +326,8 @@ local function Hedd_addon_load(self,event,arg1)
 		HeddDB.CD = HeddDB.CD or {}
 		HeddDB.Aura = HeddDB.Aura or "show"
 		HeddDB.DOT = HeddDB.DOT or "show"
+		HeddDB.clickthrough_icons = HeddDB.clickthrough_icons or "off"
+		-- HeddDB.clickthrough_bar = HeddDB.clickthrough_bar or "off"
 		HeddDB.show = HeddDB.show or "always"
 		if HeddDB.show=="allways" then HeddDB.show="always" end
 		HeddDB.resource = HeddDB.resource or "always"
@@ -299,8 +351,8 @@ local function Hedd_addon_load(self,event,arg1)
 			HeddDB.cleave.hit_time = 0
 			HeddDB.cleave.enable=false
 		end
-		
-		
+
+
 		lib.MainRefresh()
 	end
 end
@@ -428,7 +480,7 @@ pframe=runes_dropdown
 pframe=move
 --[[local autoswitch=lib.CheckboxAdd(OptionsPanel,"DPS/AOE autoswitch",nil,
 	function(self)
-	if self:GetChecked() then 
+	if self:GetChecked() then
 		lib.Hedd_slash("autoswitch on")
 	else
 		lib.Hedd_slash("autoswitch off")
@@ -439,7 +491,7 @@ pframe=autoswitch]]
 
 --[[local hide_incombat=lib.CheckboxAdd(OptionsPanel,"Hide main icon out of combat",nil,
 	function(self)
-	if self:GetChecked() then 
+	if self:GetChecked() then
 		lib.Hedd_slash("show incombat")
 	else
 		lib.Hedd_slash("show always")
@@ -450,7 +502,7 @@ pframe=hide_incombat]]
 
 --[[local hide_incombat_resource=lib.CheckboxAdd(OptionsPanel,"Hide resource out of combat",nil,
 	function(self)
-	if self:GetChecked() then 
+	if self:GetChecked() then
 		lib.Hedd_slash("resource incombat")
 	else
 		lib.Hedd_slash("resource always")
@@ -461,7 +513,7 @@ pframe=hide_incombat_resource]]
 
 local hide_aura=lib.CheckboxAdd(OptionsPanel,"Hide aura display",nil,
 	function(self)
-	if self:GetChecked() then 
+	if self:GetChecked() then
 		lib.Hedd_slash("aura hide")
 	else
 		lib.Hedd_slash("aura show")
@@ -472,7 +524,7 @@ pframe=hide_aura
 
 local hide_dot=lib.CheckboxAdd(OptionsPanel,"Hide dot number display",nil,
 	function(self)
-	if self:GetChecked() then 
+	if self:GetChecked() then
 		lib.Hedd_slash("dot hide")
 	else
 		lib.Hedd_slash("dot show")
@@ -483,7 +535,7 @@ pframe=hide_dot
 
 local hide_tracker=lib.CheckboxAdd(OptionsPanel,"Hide tracker display",nil,
 	function(self)
-	if self:GetChecked() then 
+	if self:GetChecked() then
 		lib.Hedd_slash("tracker hide")
 	else
 		lib.Hedd_slash("tracker show")
@@ -491,6 +543,26 @@ local hide_tracker=lib.CheckboxAdd(OptionsPanel,"Hide tracker display",nil,
 end)
 hide_tracker:SetPoint("TOPLEFT", pframe,"BOTTOMLEFT",0,-5)
 pframe=hide_tracker
+
+local clickthrough_icons=lib.CheckboxAdd(OptionsPanel,"Click-through icons",nil,function(self)
+	if self:GetChecked() then
+		lib.Hedd_slash("clickthrough icons on")
+	else
+		lib.Hedd_slash("clickthrough icons off")
+	end
+end)
+clickthrough_icons:SetPoint("TOPLEFT", pframe,"BOTTOMLEFT",0,-5)
+pframe=clickthrough_icons
+
+-- local clickthrough_bar=lib.CheckboxAdd(OptionsPanel,"Click-through CD bar",nil,function(self)
+-- 	if self:GetChecked() then
+-- 		lib.Hedd_slash("clickthrough bar on")
+-- 	else
+-- 		lib.Hedd_slash("clickthrough bar off")
+-- 	end
+-- end)
+-- clickthrough_bar:SetPoint("TOPLEFT", pframe,"BOTTOMLEFT",0,-5)
+-- pframe=clickthrough_bar
 
 local cd_hide_lable=hedlib.CreateFont(OptionsPanel, cfg.textfont, 12, "OUTLINE")
 cd_hide_lable:SetPoint("BOTTOMLEFT", OptionsPanel,"BOTTOMLEFT", cfg.options_shift, cfg.options_shift+cfg.isize+5)
@@ -512,14 +584,16 @@ OptionsPanel.refresh = function()
 	hide_aura:SetChecked(HeddDB.Aura=="hide")
 	hide_dot:SetChecked(HeddDB.DOT=="hide")
 	hide_tracker:SetChecked(HeddDB.tracker=="hide")
+	clickthrough_icons:SetChecked(HeddDB.clickthrough_icons=="on")
+	-- clickthrough_bar:SetChecked(HeddDB.clickthrough_bar=="on")
 	--autoswitch:SetChecked(HeddDB.autoswitch=="on")
-	
+
 	UIDropDownMenu_SetSelectedID(main_dropdown,main_dropdown.value2id[HeddDB.show])
 	UIDropDownMenu_SetText(main_dropdown, HeddDB.show)
-	
+
 	UIDropDownMenu_SetSelectedID(runes_dropdown,runes_dropdown.value2id[HeddDB.runes])
 	UIDropDownMenu_SetText(runes_dropdown, HeddDB.runes)
-	
+
 	UIDropDownMenu_SetSelectedID(resource_dropdown,resource_dropdown.value2id[HeddDB.resource])
 	UIDropDownMenu_SetText(resource_dropdown, HeddDB.resource)
 end
@@ -537,6 +611,8 @@ OptionsPanel.reset = function()
 	HeddDB.runes="always"
 	HeddDB.Aura="show"
 	HeddDB.DOT="show"
+	HeddDB.clickthrough_icons="off"
+	-- HeddDB.clickthrough_bar="off"
 	HeddDB.spellflash=cfg.spellflash
 
 	lib.MainRefresh()

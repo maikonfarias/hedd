@@ -5,23 +5,74 @@ local lib = _G["HEDD_lib"] or CreateFrame("Frame","HEDD_lib")
 ns.lib = lib
 
 local power_old={}
-lib.SetPower = function(powerType)
+
+--UNIT_POWER_UPDATE
+Hedd.POWER={}
+Hedd.POWER["MANA"] = Enum.PowerType.Mana
+Hedd.POWER["RAGE"] = Enum.PowerType.Rage
+Hedd.POWER["FOCUS"] = Enum.PowerType.Focus
+Hedd.POWER["ENERGY"] = Enum.PowerType.Energy
+Hedd.POWER["COMBO_POINTS"] = Enum.PowerType.ComboPoints
+Hedd.POWER["RUNES"] = Enum.PowerType.Runes
+Hedd.POWER["RUNIC_POWER"] = Enum.PowerType.RunicPower
+Hedd.POWER["SOUL_SHARDS"] = Enum.PowerType.SoulShards
+Hedd.POWER["LUNAR_POWER"] = Enum.PowerType.LunarPower
+Hedd.POWER["HOLY_POWER"] = Enum.PowerType.HolyPower
+Hedd.POWER["MAELSTROM"] = Enum.PowerType.Maelstrom
+Hedd.POWER["CHI"] = Enum.PowerType.Chi
+Hedd.POWER["INSANITY"] = Enum.PowerType.Insanity
+Hedd.POWER["ARCANE_CHARGES"] = Enum.PowerType.ArcaneCharges
+Hedd.POWER["FURY"] = Enum.PowerType.Fury
+Hedd.POWER["PAIN"] = Enum.PowerType.Pain
+
+Hedd.POWER_NUM={}
+for k, v in pairs(Hedd.POWER) do
+	Hedd.POWER_NUM[v]=k
+end
+
+lib.PowerEnum2Type=function(PowerEnum)
+	if type(PowerEnum) == "string" then
+		PowerEnum=Enum.PowerType[PowerEnum]
+	end
+	return Hedd.POWER_NUM[PowerEnum] or 0
+end
+
+--[[lib.SetPower = function(powerType)
 	if powerType and _G[powerType] then
 		cfg.Power.type=powerType
 		cfg.Power.type_num=_G["SPELL_POWER_"..powerType]
-	else	
+	else
 		cfg.Power.type_num,cfg.Power.type=UnitPowerType("player")
 		powerType=cfg.Power.type
 	end
-	
-	--[[if _G[powerType.."_COST"] then
-		cfg.Power.pattern_cost=hedlib.BlizzPattern(_G[powerType.."_COST"])
-	else
-		cfg.Power.pattern_cost=_G[cfg.Power.type]
-	end]]
+
 	if _G[powerType.."_COST"] then
 		cfg.Power.pattern_cost=hedlib.BlizzPattern2(_G[powerType.."_COST"])
 	end
+	lib.UpdatePower()
+	cfg.Update=true
+end]]
+
+lib.SetPower = function(powerType)
+	if powerType then
+		if type(powerType) == "string" then
+			if Hedd.POWER[powerType] then
+				cfg.Power.type=powerType
+				cfg.Power.type_num=Hedd.POWER[powerType]
+			else
+				cfg.Power.type=lib.PowerEnum2Type(powerType)
+				cfg.Power.type_num=Enum.PowerType[powerType]
+			end
+		else
+			cfg.Power.type=Hedd.POWER_NUM[powerType]
+			cfg.Power.type_num=powerType
+		end
+	else
+		cfg.Power.type_num,cfg.Power.type=UnitPowerType("player")
+	end
+	-- print("Setting cfg.Power.type to " .. cfg.Power.type)
+	-- print("Setting cfg.Power.type_num to " .. cfg.Power.type_num)
+
 	lib.UpdatePower()
 	cfg.Update=true
 end
@@ -51,7 +102,7 @@ lib.UpdatePower = function(powerType)
 		cfg.Power.regen=cfg.Power.regen/10
 	end
 	cfg.Power.real=math.floor(cfg.Power.now+lib.CastingPower())
-	if cfg.Power.real>cfg.Power.max then cfg.Power.real=cfg.Power.max end 
+	if cfg.Power.real>cfg.Power.max then cfg.Power.real=cfg.Power.max end
 	if lib.IsResourceBar() and (Heddframe.resource.bar.type=="power" or Heddframe.resource.bar.type==powerType) then
 		lib.UpdateResourceBar(cfg.Power.real)
 	end
@@ -61,6 +112,10 @@ lib.UpdatePower = function(powerType)
 		if cfg.Power.onpower then cfg.Power.onpower() end
 		cfg.Update=true
 	end
+end
+
+lib.PowerPercent = function()
+	return cfg.Power.now/cfg.Power.max*100
 end
 
 local castpower
@@ -78,7 +133,7 @@ end
 lib.PowerInTime = function(t)
 	return math.min(cfg.Power.max,(cfg.Power.now-cfg.Casting.cost+(t*cfg.Power.regen)))
 end
-	
+
 lib.PowerMax = function()
 	return cfg.Power.max
 end
@@ -92,7 +147,7 @@ lib.SearchAltPower = function()
 	for i=#hedlib.PowerType,0,-1 do
 		if hedlib.PowerType[i] then
 			pmax=UnitPowerMax("player",i)
-			if pmax~=UnitPowerMax("player") and pmax>0 then --and pmax<=10 
+			if pmax~=UnitPowerMax("player") and pmax>0 then --and pmax<=10
 				--print(hedlib.PowerType[i].." found")
 				lib.SetAltPower(hedlib.PowerType[i])
 				return true
@@ -102,7 +157,7 @@ lib.SearchAltPower = function()
 	return nil
 end
 
-lib.SetAltPower = function(alt_powerType,local_altpower_G,nocombo,func)
+--[[lib.SetAltPower = function(alt_powerType,local_altpower_G,nocombo,func)
 	if not alt_powerType or cfg.Power.type==alt_powerType then
 		lib.RemoveResourceBar()
 		lib.RemoveResourceCombo()
@@ -126,6 +181,43 @@ lib.SetAltPower = function(alt_powerType,local_altpower_G,nocombo,func)
 
 	if _G[local_altpower_G] then
 		cfg.AltPower.pattern_cost=hedlib.BlizzPattern2(_G[local_altpower_G])
+	end
+	lib.UpdateAltPower(cfg.AltPower.type)
+	cfg.Update=true
+end]]
+
+lib.SetAltPower = function(alt_powerType,nocombo,func)
+	if not alt_powerType or cfg.Power.type==alt_powerType then
+		lib.RemoveResourceBar()
+		lib.RemoveResourceCombo()
+		return
+	end
+	if type(alt_powerType) == "string" then
+		if Hedd.POWER[alt_powerType] then
+			cfg.AltPower.type=alt_powerType
+			cfg.AltPower.type_num=Hedd.POWER[alt_powerType]
+		else
+			cfg.AltPower.type=lib.PowerEnum2Type(alt_powerType)
+			cfg.AltPower.type_num=Enum.PowerType[alt_powerType]
+		end
+	else
+		cfg.AltPower.type=Hedd.POWER_NUM[alt_powerType]
+		cfg.AltPower.type_num=alt_powerType
+	end
+
+	--cfg.AltPower.type=alt_powerType
+	--cfg.AltPower.type_num=Enum.PowerType[alt_powerType]
+	cfg.AltPower.now=UnitPower("player",cfg.AltPower.type_num)
+	cfg.AltPower.max=UnitPowerMax("player",cfg.AltPower.type_num)
+	cfg.AltPower.func=func or nil
+	if not nocombo then
+		if cfg.AltPower.max<=10 then
+			lib.AddResourceCombo(cfg.AltPower.max)
+			lib.UpdateResourceCombo(cfg.AltPower.now)
+		else
+			lib.AddResourceBar(cfg.AltPower.max)
+			lib.UpdateResourceBar(cfg.AltPower.now)
+		end
 	end
 	lib.UpdateAltPower(cfg.AltPower.type)
 	cfg.Update=true

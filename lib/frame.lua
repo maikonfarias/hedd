@@ -22,13 +22,13 @@ end
 
 lib.HideFrameChildren = function(frame)
  --local kids = { frame:GetChildren() }
- for _,framechild in ipairs({ frame:GetChildren() }) do 
+ for _,framechild in ipairs({ frame:GetChildren() }) do
 	if framechild:IsShown() then framechild:Hide() end
 	end
 end
 
 lib.ShowFrameChildren = function(frame)
- --local kids = 
+ --local kids =
  for _,framechild in ipairs({ frame:GetChildren() }) do
 	if not framechild:IsShown() then framechild:Show() end
 	end
@@ -61,7 +61,7 @@ lib.hideRuneFrame=function()
 	RuneFrame.ClearAllPoints = hedlib.dummy --function() end
 	RuneFrame.SetAllPoints = hedlib.dummy --function() end
 	RuneFrame:UnregisterEvent("RUNE_POWER_UPDATE");
-	--RuneFrame:UnregisterEvent("RUNE_TYPE_UPDATE");
+	-- RuneFrame:UnregisterEvent("RUNE_TYPE_UPDATE");
 	RuneFrame:UnregisterEvent("PLAYER_ENTERING_WORLD");
 	RuneFrame:SetScript("OnEvent", nil);
 	RuneFrame:SetParent(nil)
@@ -70,7 +70,7 @@ end
 lib.OnUpdateBar = function (self, elapsed) --Heddmain.bar=self
 	elapsed = elapsed or 0
 	cfg.lastUpdateBar = cfg.lastUpdateBar + elapsed
-	if self.force or self.cd>0 then --cfg.lastUpdateBar > cfg.freq 
+	if self.force or self.cd>0 then --cfg.lastUpdateBar > cfg.freq
 		self.cd = math.max(0,self.cd - (GetTime() - self.start))
 		--self.cd = (self.cd>0) and self.cd or 0
 		self.start=GetTime()
@@ -81,6 +81,7 @@ lib.OnUpdateBar = function (self, elapsed) --Heddmain.bar=self
 			Heddmain.bar.flash=true
 			lib.ShowFrame(self)
 			self:SetValue(self.cd)
+			--print(cfg.spells[self.spell].powerType)
 			self.Spark:SetPoint("CENTER", self, "RIGHT", -(self.cd / cfg.maxbar) * self:GetWidth(), 0)
 			self.Spark:Show()
 		else
@@ -91,7 +92,7 @@ lib.OnUpdateBar = function (self, elapsed) --Heddmain.bar=self
 		end
 		cfg.lastUpdateBar = 0
 		self.force=nil
-	end	
+	end
 end
 
 lib.UpdateBar = function (spell, cd)
@@ -136,8 +137,8 @@ if SpellFlashCore then
 	Heddframe.spellflash.freq = 2/5
 	Heddframe.spellflash.color = "yellow"
 	Heddframe.spellflash.cd = 0
-	
-		
+
+
 	lib.UpdateFlash = function (spell,cd)
 		if spell and cfg.spells[spell] then
 			Heddframe.spellflash.cd = cd or 0
@@ -148,7 +149,7 @@ if SpellFlashCore then
 			lib.OnUpdateFlash(Heddframe.spellflash)
 		end
 	end
-	
+
 	lib.OnUpdateFlash = function (self, elapsed)
 		elapsed = elapsed or 0
 		self.lastUpdate = self.lastUpdate + elapsed
@@ -308,7 +309,7 @@ lib.AddIconButton = function(f,name,size,id,layer)
 	return frame
 end
 
-local cb 
+local cb
 lib.CheckboxAdd = function(f, name, caption,func)
     cb = CreateFrame("CheckButton", "$parent"..name, f, "OptionsCheckButtonTemplate")
     _G[cb:GetName().."Text"]:SetText(caption or name)
@@ -350,7 +351,7 @@ lib.OnUpdateTracker = function (self, elapsed)
 			self:SetAlpha(Heddmain.tracker.alpha)
 			self.Spark:SetAlpha(1)
 			self.Spark:Show()
-			
+
 		else
 			self.Spark:Hide()
 			self:SetAlpha(1)
@@ -358,7 +359,7 @@ lib.OnUpdateTracker = function (self, elapsed)
 		--end
 		self.timeElapsed = 0
 		self.force=false
-	end	
+	end
 end
 
 lib.AddTracking = function(spell,color)
@@ -378,7 +379,7 @@ lib.AddTracking = function(spell,color)
 		Heddmain.tracker[spell]:SetPoint("TOPRIGHT",Heddmain.tracker.lastframe,"BOTTOMRIGHT")
 		Heddmain.tracker[spell].refresh=cfg.aura[spell].refresh or 0
 		Heddmain.tracker.lastframe=Heddmain.tracker[spell]
-		
+
 		Heddmain.tracker[spell]:SetStatusBarTexture(cfg.statusbar_texture)
 		Heddmain.tracker[spell].color=color or {124/255, 252/255, 0}
 		Heddmain.tracker[spell]:SetStatusBarColor(unpack(color))
@@ -387,7 +388,7 @@ lib.AddTracking = function(spell,color)
 		--Heddmain.tracker[spell].force=true
 		Heddmain.tracker[spell]:SetValue(0)
 		Heddmain.tracker[spell].spell=spell
-		
+
 		Heddmain.tracker[spell].icon=lib.AddIconButton(Heddmain.tracker[spell],nil,Heddmain.tracker.size,cfg.aura[spell].id)
 		Heddmain.tracker[spell].icon:SetPoint("LEFT",Heddmain.tracker[spell],"RIGHT")
 		--[[hedlib.CreateTexture(Heddmain.tracker[spell])
@@ -398,7 +399,7 @@ lib.AddTracking = function(spell,color)
 		Heddmain.tracker[spell].Spark =  _G[Heddmain.tracker[spell]:GetName().."_SPARK"] or Heddmain.tracker[spell]:CreateTexture("$parent_SPARK", "OVERLAY")
 		--Heddmain.tracker[spell].Spark:SetTexture([[Interface\CastingBar\UI-CastingBar-Spark]])
 		--Heddmain.tracker[spell].Spark:SetWidth(20)
-		
+
 		Heddmain.tracker[spell].Spark:SetBlendMode("DISABLE")
 		Heddmain.tracker[spell].Spark:SetHeight(Heddmain.tracker.size)
 		Heddmain.tracker[spell].Spark:SetWidth(5)
@@ -408,7 +409,7 @@ lib.AddTracking = function(spell,color)
 		Heddmain.tracker[spell].text:SetPoint("LEFT",Heddmain.tracker[spell].icon,"RIGHT")
 		Heddmain.tracker[spell].text:SetText("")
 		--Heddmain.tracker[spell].Spark:Hide()
-		
+
 		--Heddmain.tracker[spell]:SetScript("OnUpdate", nil)
 		lib.StopTracker(spell)
 		lib.SetAuraFunction(spell,"OnUpdate",function(spell,num_func)
@@ -422,4 +423,3 @@ lib.AddTracking = function(spell,color)
 		--lib.ShowFrameChildren(Heddmain.tracker)
 	end
 end
-

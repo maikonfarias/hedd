@@ -81,7 +81,7 @@ local function PrepareForScan()
 	if ArtifactFrame and not ArtifactFrame:IsShown() then
 		ArtifactFrame:UnregisterEvent("ARTIFACT_UPDATE")
 		ArtifactFrame:UnregisterEvent("ARTIFACT_CLOSE")
-		ArtifactFrame:UnregisterEvent("ARTIFACT_MAX_RANKS_UPDATE")
+		-- ArtifactFrame:UnregisterEvent("ARTIFACT_MAX_RANKS_UPDATE")
 	end
 end
 
@@ -94,7 +94,7 @@ local function RestoreStateAfterScan()
 		Clear()
 		ArtifactFrame:RegisterEvent("ARTIFACT_UPDATE")
 		ArtifactFrame:RegisterEvent("ARTIFACT_CLOSE")
-		ArtifactFrame:RegisterEvent("ARTIFACT_MAX_RANKS_UPDATE")
+		-- ArtifactFrame:RegisterEvent("ARTIFACT_MAX_RANKS_UPDATE")
 	end
 end
 
