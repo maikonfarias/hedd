@@ -5,7 +5,7 @@
 ## Version: 9.0.1
 ## SavedVariables: HeddDB
 ## OptionalDeps: Hsettings, SpellFlash,SpellFlashCore,OmniCC
-## X-Curse-Packaged-Version: r546-alpha
+## X-Curse-Packaged-Version: r547-alpha
 ## X-Curse-Project-Name: Hedd
 ## X-Curse-Project-ID: hedd
 ## X-Curse-Repository-ID: wow/hedd/mainline
