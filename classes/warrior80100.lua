@@ -662,7 +662,7 @@ lib.classpostload["WARRIOR"] = function()
 		if
 		lib.GetUnitHealth("target","percent")
 	end)]]
-	function Heddclassevents.UNIT_HEALTH_FREQUENT(unit)
+	function Heddclassevents.UNIT_HEALTH(unit)
 		if unit=="target" then
 			lib.UpdateSpell("Execute")
 			--[[if cfg.spells["Execute"].isUsable then

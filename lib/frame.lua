@@ -43,8 +43,8 @@ local bdcolor={0,0,0,0}
 lib.bdcolor = function(frame,color)
 	color=color or {0,0,0,0}
 	if bdcolor[1]~=color[1] or bdcolor[2]~=color[2] or bdcolor[3]~=color[3] or bdcolor[4]~=color[4] then
-		frame:SetBackdropColor(unpack(color))
-		frame:SetBackdropBorderColor(unpack(color))
+		-- frame:SetBackdropColor(unpack(color))
+		-- frame:SetBackdropBorderColor(unpack(color))
 		bdcolor[1]=color[1]
 		bdcolor[2]=color[2]
 		bdcolor[3]=color[3]

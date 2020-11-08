@@ -66,8 +66,8 @@ lib.classes["PRIEST"][3] = function()
 	lib.AddAura("Voidform", 194249, "buff", "player")
 
 	-- Icon fix for Void Bolt
-	cfg.spells["Void Bolt"].realid = 228266
-	lib.SetSpellIcon("Void Bolt")
+	-- cfg.spells["Void Bolt"].realid = 228266
+	-- lib.SetSpellIcon("Void Bolt")
 
 	cfg.voidform_cost = 90
 	if cfg.talents["Legacy of the Void"] then

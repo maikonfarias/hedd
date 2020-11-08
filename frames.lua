@@ -57,8 +57,8 @@ hedlib.backdrop_texture=cfg.backdrop_texture
 hedlib.backdrop_edge_texture=cfg.backdrop_edge_texture
 hedlib.CreateBD(Heddmain,cfg.border,{1,0,0,1})
 Heddmain.bd:Show()
-Heddmain.bd:SetBackdropColor(0,0,0,0)
-Heddmain.bd:SetBackdropBorderColor(0,0,0,0)
+-- Heddmain.bd:SetBackdropColor(0,0,0,0)  
+-- Heddmain.bd:SetBackdropBorderColor(0,0,0,0)
 Heddmain.text = Heddmain.text or hedlib.CreateFont(Heddmain, cfg.textfont, cfg.tsize, "OUTLINE")
 --Heddmain.text:SetAllPoints(Heddmain)
 Heddmain.text:SetPoint("TOP",Heddmain,"BOTTOM")

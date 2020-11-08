@@ -402,12 +402,13 @@ lib.classes["MAGE"][2] = function() -- Fire
 			return nil
 		end,
 		["Rune of Power_combustion"] = function()
-			if not HeddDB.CD[cfg.spells["Combustion"].id].enabled then return nil end
-			if lib.SpellCasting("Rune of Power") then return nil end
-			if lib.GetSpellCD("Combustion")<1 then
-				return lib.SimpleCDCheck("Rune of Power")
-			end
 			return nil
+			-- if not HeddDB.CD[cfg.spells["Combustion"].id].enabled then return nil end
+			-- if lib.SpellCasting("Rune of Power") then return nil end
+			-- if lib.GetSpellCD("Combustion")<1 then
+			-- 	return lib.SimpleCDCheck("Rune of Power")
+			-- end
+			-- return nil
 		end,
 		["Rune of Power_2"] = function()
 			if lib.SpellCasting("Rune of Power") then return nil end

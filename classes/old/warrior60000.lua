@@ -663,7 +663,7 @@ lib.classpostload["WARRIOR"] = function()
 			cfg.Update=true
 		end
 	end
-	function Heddclassevents.UNIT_HEALTH_FREQUENT(unit)
+	function Heddclassevents.UNIT_HEALTH(unit)
 		if unit=="target" then
 			lib.UpdateSpell("execute")
 		end

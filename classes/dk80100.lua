@@ -382,7 +382,7 @@ lib.classes["DEATHKNIGHT"][3] = function () --Unholy
 
 	cfg.pandemic_multiplier = 0.3
 	cfg.dk = {}
-	cfg.dk.virulent_plague_base = 21
+	cfg.dk.virulent_plague_base = 27
 	cfg.dk.virulent_plague_multiplier = 1
 	if cfg.talents["Ebon Fever"] then
 		cfg.dk.virulent_plague_multiplier = 0.5

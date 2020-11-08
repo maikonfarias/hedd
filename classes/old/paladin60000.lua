@@ -524,7 +524,7 @@ lib.classpostload["PALADIN"] = function()
 		
 	end
 	
-	function Heddclassevents.UNIT_HEALTH_FREQUENT(unit)
+	function Heddclassevents.UNIT_HEALTH(unit)
 		if unit=="target" then
 			lib.UpdateSpell("HoW")
 		end

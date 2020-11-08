@@ -57,7 +57,7 @@ lib.basicevents = function()
 		end
 	end
 
-	function Heddevents.UNIT_HEALTH_FREQUENT(unitID)
+	function Heddevents.UNIT_HEALTH(unitID)
 		if hedlib.isPlayer(unitID) or unitID=="target" then
 			lib.UpdateHealth(unitID)
 		end
@@ -94,7 +94,7 @@ lib.basicevents = function()
 		lib.UpdateTargetCast()
 		--lib.UpdateTargetChannel()
 		Heddevents.UNIT_AURA("target")
-		Heddevents.UNIT_HEALTH_FREQUENT("target")
+		Heddevents.UNIT_HEALTH("target")
 		lib.instance()
 		lib.MainOptionsToggle()
 		lib.ResourceOptionsToggle()
@@ -106,7 +106,7 @@ lib.basicevents = function()
 	function Heddevents.UNIT_PET(unitID)
 		if unitID=="player" then
 			lib.UpdatePet()
-			Heddevents.UNIT_HEALTH_FREQUENT("pet")
+			Heddevents.UNIT_HEALTH("pet")
 		end
 	end
 
@@ -297,7 +297,7 @@ lib.basicevents = function()
 		for unitID,_ in pairs(cfg.watchunits) do
 			if unitID~="target" then
 				Heddevents.UNIT_AURA(unitID)
-				Heddevents.UNIT_HEALTH_FREQUENT(unitID)
+				Heddevents.UNIT_HEALTH(unitID)
 			end
 		end
 		-- Heddevents.UNIT_POWER_UPDATE("player")

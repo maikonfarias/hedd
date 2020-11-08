@@ -199,10 +199,10 @@ hedlib.CreateBD = function(f,border,color, bgcolor,texture,edge)
     f.bd:SetFrameLevel(0)
     f.bd:SetPoint("TOPLEFT",-border,border)
     f.bd:SetPoint("BOTTOMRIGHT",border,-border)
-    f.bd:SetBackdrop(backdrop_tab)
+    -- f.bd:SetBackdrop(backdrop_tab)
 	bgcolor = bgcolor or {0,0,0,0}
-    f.bd:SetBackdropColor(unpack(bgcolor))
-   	f.bd:SetBackdropBorderColor(unpack(color))
+    -- f.bd:SetBackdropColor(unpack(bgcolor))
+   	-- f.bd:SetBackdropBorderColor(unpack(color))
 	return f.bd
 end
 
