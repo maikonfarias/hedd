@@ -334,7 +334,7 @@ lib.classes["DEATHKNIGHT"][3] = function () --Unholy
 		-- Tier 4
 		["Pestilent Pustules"]=IsPlayerSpell(194917),
 		["Harbinger of Doom"]=IsPlayerSpell(276023),
-		["Soul Reaper"]=IsPlayerSpell(130736),
+		["Soul Reaper"]=IsPlayerSpell(343294),
 		-- Tier 5
 		["Spell Eater"]=IsPlayerSpell(207321),
 		["Wraith Walk"]=IsPlayerSpell(212552),
@@ -367,7 +367,7 @@ lib.classes["DEATHKNIGHT"][3] = function () --Unholy
 	lib.AddSpell("Outbreak",{77575})
 	lib.AddSpell("Raise Dead",{46584})
 	lib.AddSpell("Scourge Strike",{55090})
-	lib.AddSpell("Soul Reaper",{130736},"target")
+	lib.AddSpell("Soul Reaper",{343294},"target")
 	lib.AddSpell("Summon Gargoyle",{49206})
 	lib.AddSpell("Unholy Blight",{115989})
 	lib.AddSpell("Unholy Frenzy",{207289}, true)
@@ -495,7 +495,7 @@ lib.classes["DEATHKNIGHT"][3] = function () --Unholy
 			return lib.SimpleCDCheck("Summon Gargoyle", lib.TimeToRunes(3))
 		end,
 		["Soul Reaper"] = function()
-			if lib.ActiveRuneCount() > 1 then return nil end
+			if lib.GetUnitHealth("target","percent")>35 then return nil end
 			return lib.SimpleCDCheck("Soul Reaper")
 		end,
 		["Apocalypse"] = function()
